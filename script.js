@@ -71,14 +71,14 @@ const BICYCLE_LAW_URL = "https://www.mass.gov/info-details/massachusetts-law-abo
 const PRINT_ICON_SVG =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 9V4h10v5"/><path d="M7 14H5a2 2 0 0 1-2-2v-1.5A2.5 2.5 0 0 1 5.5 8h13A2.5 2.5 0 0 1 21 10.5V12a2 2 0 0 1-2 2h-2"/><path d="M7 12h10v8H7z"/><circle cx="17.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/></svg>';
 const RECOMMENDATION_IMAGE_ALT_TEXT = {
-  bicycle: "Standard two-wheel bicycle",
+  bicycle: "Traditional two-wheel bicycle",
   ebike: "Step-through electric bicycle",
   escooter: "Standing electric scooter",
-  lowSpeedPoweredMicromobility: "Compact low-speed electric devices",
+  lowSpeedPoweredMicromobility: "Electric skateboard, one-wheel board, and compact standing e-scooter devices",
   cargoBike: "Long-tail cargo bicycle",
-  adaptiveMobility: "Adaptive cycles",
-  bikeshare: "Docked bikeshare bicycles",
-  humanPoweredYouth: "Age-appropriate youth mobility devices"
+  adaptiveMobility: "Adaptive cycles including a recumbent tricycle, upright tricycle, and handcycle",
+  bikeshare: "Station-based shared bicycles",
+  humanPoweredYouth: "Youth bicycle, child seat, scooter, and roller skates"
 };
 
 const DEVICE_CONTENT = {

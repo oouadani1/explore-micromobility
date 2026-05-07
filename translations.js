@@ -246,11 +246,11 @@ window.MICROMOBILITY_TRANSLATIONS = {
       bicycle: "Bicicleta tradicional de dos ruedas",
       ebike: "Bicicleta eléctrica de cuadro bajo",
       escooter: "Scooter eléctrico de pie",
-      lowSpeedPoweredMicromobility: "Dispositivos eléctricos compactos de baja velocidad",
+      lowSpeedPoweredMicromobility: "Patineta eléctrica, tabla de una rueda y scooter eléctrico compacto",
       cargoBike: "Bicicleta longtail de carga",
-      adaptiveMobility: "Bicicletas adaptadas",
+      adaptiveMobility: "Bicicletas adaptadas, incluido un triciclo reclinado, un triciclo vertical y una bicicleta de mano",
       bikeshare: "Bicicletas compartidas en estación",
-      humanPoweredYouth: "Micromovilidad infantil"
+      humanPoweredYouth: "Bicicleta juvenil, asiento infantil, scooter y patines"
     }
   },
   exploreReasons: {
