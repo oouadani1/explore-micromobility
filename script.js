@@ -35,17 +35,17 @@ const OUTPUTS = {
 
 const APP_NAME = "Explore Micromobility";
 const INTRO_TEXT =
-  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Answer a few questions to explore some micromobility devices. Selecting an answer opens the next question. The last answer opens your results.";
+  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.";
 const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     introText:
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Answer a few questions to explore some micromobility devices. Selecting an answer opens the next question. The last answer opens your results."
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results."
   },
   es: {
     heroTitle: "Explore Micromobility",
     introText:
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. Responde algunas preguntas para explorar algunos dispositivos de micromovilidad. Al seleccionar una respuesta, se abre la siguiente pregunta. La última respuesta abre tus resultados."
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. La mayoría de los recorridos toman de 7 a 9 preguntas para encontrar dispositivos de micromovilidad que podrían funcionar para ti. Al seleccionar una respuesta, se abre la siguiente pregunta. En la pregunta sobre la edad, escribe una edad y usa Siguiente. La última respuesta abre tus resultados."
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
