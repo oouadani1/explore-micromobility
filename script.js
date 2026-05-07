@@ -64,6 +64,9 @@ const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What helped show these opti
 const RESULTS_METHODS_LIMITING_TITLE_TEXT = "What may have lowered other options";
 const RESULTS_METHODS_REPORT_LINK_TEXT = "Read the Special Commission report";
 const RESULTS_METHODS_BICYCLE_LAW_LINK_TEXT = "Massachusetts law about bicycles";
+const RESULTS_REASON_HEADING_TEXT = "Why this option may be a good fit";
+const RESULTS_GUIDANCE_HEADING_TEXT = "What to know about this option";
+const RESULTS_NEXT_STEPS_HEADING_TEXT = "More resources for this option";
 const FEEDBACK_PROMPT_TEXT =
   '<strong>Love this idea? Think it needs more work? Let us know your thoughts at <a href="mailto:thelab@dot.state.ma.us">thelab@dot.state.ma.us</a>.</strong>';
 const REPORT_URL = "https://www.mass.gov/doc/special-commission-on-micromobility-report-january-2026/download";
@@ -2479,18 +2482,18 @@ function renderResultsMethodology(answers) {
   const limitingNotes = getCurrentResponseLimitingNotes(answers);
   const visibilityLawNotes = getResultsVisibilityLawNotes();
   const scoringFactorsHtml = scoringFactors
-    .map((item) => `<li tabindex="0">${item}</li>`)
+    .map((item) => `<li>${item}</li>`)
     .join("");
   const visibilityLawNotesHtml = visibilityLawNotes
-    .map((item) => `<li tabindex="0">${item}</li>`)
+    .map((item) => `<li>${item}</li>`)
     .join("");
   const currentResponseRulesHtml = currentResponseRules.length
-    ? currentResponseRules.map((item) => `<li tabindex="0">${item}</li>`).join("")
-    : `<li tabindex="0">${isSpanishLocale() ? getUiText("noAdditionalVisibilityRules") : "No additional notes changed what showed up for this response."}</li>`;
+    ? currentResponseRules.map((item) => `<li>${item}</li>`).join("")
+    : `<li>${isSpanishLocale() ? getUiText("noAdditionalVisibilityRules") : "No additional notes changed what showed up for this response."}</li>`;
   const limitingNotesHtml = limitingNotes.length
     ? `
-        <h3 class="results-methodology__section-title" tabindex="0">${isSpanishLocale() ? getUiText("whatMayLowerOptions") : RESULTS_METHODS_LIMITING_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list" tabindex="0">${limitingNotes.map((item) => `<li tabindex="0">${item}</li>`).join("")}</ul>
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatMayLowerOptions") : RESULTS_METHODS_LIMITING_TITLE_TEXT}</h3>
+        <ul class="results-methodology__list">${limitingNotes.map((item) => `<li>${item}</li>`).join("")}</ul>
       `
     : "";
 
@@ -2511,21 +2514,21 @@ function renderResultsMethodology(answers) {
         ${APP_STATE.resultsMethodologyOpen ? "" : "hidden"}
         data-accordion-panel
       >
-        <h3 class="results-methodology__title" tabindex="0">${isSpanishLocale() ? getUiText("howExplorerWorks") : RESULTS_METHODS_TITLE_TEXT}</h3>
-        <p tabindex="0">${isSpanishLocale() ? getUiText("resultsOverviewText") : RESULTS_METHODS_OVERVIEW_TEXT}</p>
-        <p tabindex="0">${isSpanishLocale() ? getUiText("resultsReportText") : RESULTS_METHODS_REPORT_TEXT}</p>
+        <h3 class="results-methodology__title">${isSpanishLocale() ? getUiText("howExplorerWorks") : RESULTS_METHODS_TITLE_TEXT}</h3>
+        <p>${isSpanishLocale() ? getUiText("resultsOverviewText") : RESULTS_METHODS_OVERVIEW_TEXT}</p>
+        <p>${isSpanishLocale() ? getUiText("resultsReportText") : RESULTS_METHODS_REPORT_TEXT}</p>
 
-        <h3 class="results-methodology__section-title" tabindex="0">${isSpanishLocale() ? getUiText("currentVisibilityRules") : RESULTS_METHODS_VISIBILITY_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list" tabindex="0">${visibilityLawNotesHtml}</ul>
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("currentVisibilityRules") : RESULTS_METHODS_VISIBILITY_TITLE_TEXT}</h3>
+        <ul class="results-methodology__list">${visibilityLawNotesHtml}</ul>
 
-        <h3 class="results-methodology__section-title" tabindex="0">${isSpanishLocale() ? getUiText("whatAffectsScoring") : RESULTS_METHODS_SCORING_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list" tabindex="0">${scoringFactorsHtml}</ul>
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatAffectsScoring") : RESULTS_METHODS_SCORING_TITLE_TEXT}</h3>
+        <ul class="results-methodology__list">${scoringFactorsHtml}</ul>
 
-        <h3 class="results-methodology__section-title" tabindex="0">${isSpanishLocale() ? getUiText("whatHelpedShowResults") : RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list" tabindex="0">${currentResponseRulesHtml}</ul>
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatHelpedShowResults") : RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT}</h3>
+        <ul class="results-methodology__list">${currentResponseRulesHtml}</ul>
         ${limitingNotesHtml}
 
-        <p class="results-methodology__links" tabindex="0">
+        <p class="results-methodology__links">
           <a href="${REPORT_URL}" target="_blank" rel="noopener noreferrer">${isSpanishLocale() ? getUiText("readCommissionReport") : RESULTS_METHODS_REPORT_LINK_TEXT}</a>
           <span aria-hidden="true"> | </span>
           <a href="${BICYCLE_LAW_URL}" target="_blank" rel="noopener noreferrer">${isSpanishLocale() ? getUiText("massLawAboutBicycles") : RESULTS_METHODS_BICYCLE_LAW_LINK_TEXT}</a>
@@ -2556,12 +2559,12 @@ function renderAllDeviceResultsPanel(allRecommendations, answers) {
       const reasonId = `${itemId}-reason`;
 
       return `
-      <li class="all-results-item" tabindex="0" aria-labelledby="${deviceId} ${tagId} ${reasonId}">
+      <li class="all-results-item" aria-labelledby="${deviceId} ${tagId} ${reasonId}">
         ${imageSrc ? `<img src="${imageSrc}" alt="${getRecommendationImageAlt(rec.id, answers)}" class="all-results-image">` : ""}
         <div class="all-results-copy">
-          <p id="${deviceId}" class="all-results-device" tabindex="0">${rec.label}</p>
-          <p id="${tagId}" class="all-results-tag ${priority.className}" tabindex="0">${priority.label}</p>
-          <p id="${reasonId}" class="all-results-reason" tabindex="0"><em>${reason}</em></p>
+          <p id="${deviceId}" class="all-results-device">${rec.label}</p>
+          <p id="${tagId}" class="all-results-tag ${priority.className}">${priority.label}</p>
+          <p id="${reasonId}" class="all-results-reason"><em>${reason}</em></p>
         </div>
       </li>
     `;
@@ -2583,7 +2586,7 @@ function renderAllDeviceResultsPanel(allRecommendations, answers) {
         ${APP_STATE.allResultsPanelOpen ? "" : "hidden"}
         data-accordion-panel
       >
-        <ul class="all-results-list" tabindex="0">${itemsHtml}</ul>
+        <ul class="all-results-list">${itemsHtml}</ul>
       </div>
     </section>
   `;
@@ -3061,10 +3064,10 @@ function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodolog
   const recommendationNextStepsHeadingId = `recommendation-next-steps-heading-${rec.id}`;
   const rationaleHeading =
     pathway === "exploring"
-      ? (isSpanishLocale() ? getUiText("whyConsiderIt") : "Why it appears")
+      ? (isSpanishLocale() ? getUiText("whyConsiderIt") : RESULTS_REASON_HEADING_TEXT)
       : pathway === "myself"
-        ? (isSpanishLocale() ? getUiText("whyThisFitsForYou") : "Why it appears")
-        : (isSpanishLocale() ? getUiText("whyThisFits") : "Why it appears");
+        ? (isSpanishLocale() ? getUiText("whyThisFitsForYou") : RESULTS_REASON_HEADING_TEXT)
+        : (isSpanishLocale() ? getUiText("whyThisFits") : RESULTS_REASON_HEADING_TEXT);
   const considerations = getConsiderBase(rec.id);
 
   let filteredBaseConsiderations = [...considerations];
@@ -3185,7 +3188,6 @@ function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodolog
       role="region"
       aria-labelledby="${recommendationTitleId}"
       aria-describedby="${recommendationIntroId} ${recommendationReasonId}"
-      tabindex="0"
     >
       <h1 id="${recommendationTitleId}" class="recommendation-title" tabindex="-1">${rec.label}</h1>
       <p id="${recommendationIntroId}" class="visually-hidden">${rationaleHeading}</p>
@@ -3193,11 +3195,10 @@ function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodolog
       ${imageSrc ? `<img src="${imageSrc}" alt="${getRecommendationImageAlt(rec.id, answers)}" class="device-image">` : ""}
       ${imageTag ? `<p class="recommendation-image-tag">${imageTag}</p>` : ""}
 
-      <h2 id="${recommendationReasonHeadingId}" class="guidance-heading" tabindex="0">${rationaleHeading}</h2>
+      <h2 id="${recommendationReasonHeadingId}" class="guidance-heading">${rationaleHeading}</h2>
       <p
         id="${recommendationReasonId}"
         class="recommendation-reason"
-        tabindex="0"
         aria-label="${rationaleHeading}. ${getRecommendationReason(rec.id, answers, pathway)}"
       >
         ${getRecommendationReason(rec.id, answers, pathway)}
@@ -3210,15 +3211,13 @@ function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodolog
         class="guidance"
         role="group"
         aria-labelledby="${recommendationGuidanceHeadingId}"
-        tabindex="0"
       >
-        <h2 id="${recommendationGuidanceHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("thingsToConsider") : "Things to know"}</h2>
-        <ul class="guidance-list" tabindex="0" aria-labelledby="${recommendationGuidanceHeadingId}">${considerationsHtml}</ul>
+        <h2 id="${recommendationGuidanceHeadingId}" class="guidance-heading">${isSpanishLocale() ? getUiText("thingsToConsider") : RESULTS_GUIDANCE_HEADING_TEXT}</h2>
+        <ul class="guidance-list" aria-labelledby="${recommendationGuidanceHeadingId}">${considerationsHtml}</ul>
 
         <p
           id="${recommendationCostId}"
           class="device-cost"
-          tabindex="0"
           aria-label="${costLabel}: ${content.cost}"
         >
           <span class="device-cost-label">${costLabel}:</span>
@@ -3232,9 +3231,8 @@ function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodolog
         class="next-steps"
         role="group"
         aria-labelledby="${recommendationNextStepsHeadingId}"
-        tabindex="0"
       >
-        <h2 id="${recommendationNextStepsHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("nextSteps") : "Next steps"}</h2>
+        <h2 id="${recommendationNextStepsHeadingId}" class="guidance-heading">${isSpanishLocale() ? getUiText("nextSteps") : RESULTS_NEXT_STEPS_HEADING_TEXT}</h2>
         <ul class="next-steps-list">${nextStepsHtml}</ul>
       </div>
     </section>
@@ -3268,10 +3266,10 @@ function getResultsFocusSummary(rec, answers, pathway) {
 
   const rationaleHeading =
     pathway === "exploring"
-      ? (isSpanishLocale() ? getUiText("whyConsiderIt") : "Why it appears")
+      ? (isSpanishLocale() ? getUiText("whyConsiderIt") : RESULTS_REASON_HEADING_TEXT)
       : pathway === "myself"
-        ? (isSpanishLocale() ? getUiText("whyThisFitsForYou") : "Why it appears")
-        : (isSpanishLocale() ? getUiText("whyThisFits") : "Why it appears");
+        ? (isSpanishLocale() ? getUiText("whyThisFitsForYou") : RESULTS_REASON_HEADING_TEXT)
+        : (isSpanishLocale() ? getUiText("whyThisFits") : RESULTS_REASON_HEADING_TEXT);
 
   return `${rec.label}. ${rationaleHeading}. ${getRecommendationReason(rec.id, answers, pathway)}`;
 }
@@ -3412,7 +3410,7 @@ function renderCurrentRecommendationPage() {
         >
           <span aria-hidden="true">&#8249;</span>
         </button>
-        <p class="results-counter" tabindex="0">${getDynamicCountLabel(index + 1, recommendations.length)}</p>
+        <p class="results-counter">${getDynamicCountLabel(index + 1, recommendations.length)}</p>
         <button
           id="resultNextBtn"
           type="button"
@@ -3721,21 +3719,13 @@ function renderFooterDisclaimer() {
     .replace(/\s+/g, " ")
     .trim();
 
-  footerDisclaimer.setAttribute("tabindex", "0");
-  footerDisclaimer.setAttribute(
-    "aria-label",
-    isSpanishLocale() ? getUiText("scoringDisclaimerText") : SCORING_DISCLAIMER_TEXT
-  );
-
   footerDisclaimer.innerHTML = `
     <span
       class="recommendation-disclaimer-copy"
-      tabindex="0"
       aria-label="${isSpanishLocale() ? getUiText("scoringDisclaimerText") : SCORING_DISCLAIMER_TEXT}"
     >${isSpanishLocale() ? getUiText("scoringDisclaimerText") : SCORING_DISCLAIMER_TEXT}</span>
     <span
       class="recommendation-disclaimer-feedback"
-      tabindex="0"
       aria-label="${feedbackText}"
     >${isSpanishLocale() ? getUiText("feedbackPromptText") : FEEDBACK_PROMPT_TEXT}</span>
   `;
