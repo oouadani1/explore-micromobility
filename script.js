@@ -3736,7 +3736,7 @@ progress.textContent = "";
                   <span class="option-card-media">
                     <img
                       src="${ROUTE_OPTION_MEDIA[option.value].src}"
-                      alt="${getRouteOptionAlt(option.value)}"
+                      alt=""
                       class="option-card-image"
                     >
                   </span>
