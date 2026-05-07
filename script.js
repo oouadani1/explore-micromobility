@@ -3096,13 +3096,13 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
       aria-describedby="${recommendationIntroId} ${recommendationReasonId}"
       tabindex="0"
     >
-      <h2 id="${recommendationTitleId}" class="recommendation-title" tabindex="-1">${rec.label}</h2>
+      <h1 id="${recommendationTitleId}" class="recommendation-title" tabindex="-1">${rec.label}</h1>
       <p id="${recommendationIntroId}" class="visually-hidden">${rationaleHeading}</p>
 
       ${imageSrc ? `<img src="${imageSrc}" alt="${getRecommendationImageAlt(rec.id, answers)}" class="device-image">` : ""}
       ${imageTag ? `<p class="recommendation-image-tag">${imageTag}</p>` : ""}
 
-      <h3 id="${recommendationReasonHeadingId}" class="guidance-heading" tabindex="0">${rationaleHeading}</h3>
+      <h2 id="${recommendationReasonHeadingId}" class="guidance-heading" tabindex="0">${rationaleHeading}</h2>
       <p
         id="${recommendationReasonId}"
         class="recommendation-reason"
@@ -3119,7 +3119,7 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
         aria-labelledby="${recommendationGuidanceHeadingId}"
         tabindex="0"
       >
-        <h3 id="${recommendationGuidanceHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("thingsToConsider") : "Things to know"}</h3>
+        <h2 id="${recommendationGuidanceHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("thingsToConsider") : "Things to know"}</h2>
         <ul class="guidance-list" tabindex="0" aria-labelledby="${recommendationGuidanceHeadingId}">${considerationsHtml}</ul>
 
         <p
@@ -3140,7 +3140,7 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
         aria-labelledby="${recommendationNextStepsHeadingId}"
         tabindex="0"
       >
-        <h3 id="${recommendationNextStepsHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("nextSteps") : "Next steps"}</h3>
+        <h2 id="${recommendationNextStepsHeadingId}" class="guidance-heading" tabindex="0">${isSpanishLocale() ? getUiText("nextSteps") : "Next steps"}</h2>
         <ul class="next-steps-list">${nextStepsHtml}</ul>
       </div>
     </section>
@@ -3301,7 +3301,7 @@ function renderCurrentRecommendationPage() {
   result.innerHTML = `
     <div id="resultsLive" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
     <p id="resultsFocusSummary" class="visually-hidden">${resultsFocusSummary}</p>
-    <h2 id="resultsHeading" class="results-intro-heading" tabindex="-1" aria-describedby="resultsFocusSummary">${resultsIntroText}</h2>
+    <p id="resultsHeading" class="results-intro-heading" tabindex="-1" aria-describedby="resultsFocusSummary">${resultsIntroText}</p>
 
     ${cardHtml}
 
