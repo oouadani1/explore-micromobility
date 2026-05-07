@@ -3825,10 +3825,11 @@ progress.textContent = "";
       <label for="${questionId}" class="question-label">${renderedLabel}</label>
       <input
         id="${questionId}"
-        type="number"
-        min="${question.min}"
-        max="${question.max}"
-        step="1"
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        autocomplete="off"
+        spellcheck="false"
         value="${savedValue}"
         placeholder="${isSpanishLocale() ? getUiText("agePlaceholder") : "Enter age"}"
         ${describedByIds ? `aria-describedby="${describedByIds}"` : ""}
@@ -3879,7 +3880,7 @@ function showStepError(message) {
 
   const questionId = getCurrentQuestionId();
   const numberInput = document.getElementById(questionId);
-  if (numberInput && numberInput.type === "number") {
+  if (numberInput && getLocalizedQuestion(questionId)?.type === "number") {
     numberInput.setAttribute("aria-invalid", "true");
     numberInput.setAttribute("aria-errormessage", "stepError");
   }
@@ -3905,7 +3906,7 @@ function clearStepError() {
 
   const questionId = getCurrentQuestionId();
   const numberInput = document.getElementById(questionId);
-  if (numberInput && numberInput.type === "number") {
+  if (numberInput && getLocalizedQuestion(questionId)?.type === "number") {
     numberInput.removeAttribute("aria-invalid");
     numberInput.removeAttribute("aria-errormessage");
   }
