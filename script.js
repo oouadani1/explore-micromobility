@@ -1306,6 +1306,89 @@ function getDynamicCountLabel(current, total) {
   return `${current} of ${total}`;
 }
 
+function getSequenceLengthForAnswers(rawAnswers) {
+  const pathway = rawAnswers.pathway || "myself";
+  const visibleKeys = getVisibleQuestionKeys(rawAnswers);
+
+  if (pathway === "child") {
+    return visibleKeys.filter((key) => key !== "carryChildren").length;
+  }
+
+  return visibleKeys.length;
+}
+
+function getPossibleQuestionTotals(rawAnswers = APP_STATE.answers) {
+  if (rawAnswers.pathway === "exploring") {
+    return { min: 1, max: 1 };
+  }
+
+  const candidatePathways = rawAnswers.pathway
+    ? [rawAnswers.pathway]
+    : ["myself", "someoneElse", "child"];
+  const candidatePrimaryUses = rawAnswers.primaryUse
+    ? [rawAnswers.primaryUse]
+    : ["transport", "recreation"];
+  const lengths = [];
+
+  candidatePathways.forEach((pathway) => {
+    candidatePrimaryUses.forEach((primaryUse) => {
+      lengths.push(
+        getSequenceLengthForAnswers({
+          ...rawAnswers,
+          pathway,
+          primaryUse
+        })
+      );
+    });
+  });
+
+  return {
+    min: Math.min(...lengths),
+    max: Math.max(...lengths)
+  };
+}
+
+function getQuestionProgressText(questionId) {
+  const currentNumber = findQuestionIndex(questionId) + 1;
+  const { min, max } = getPossibleQuestionTotals(APP_STATE.answers);
+  const questionLabel = isSpanishLocale() ? "Pregunta" : "Question";
+  const ofLabel = isSpanishLocale() ? getUiText("countOf") : "of";
+
+  if (min === max) {
+    return `${questionLabel} ${currentNumber} ${ofLabel} ${max}`;
+  }
+
+  const totalRange = isSpanishLocale() ? `${min} a ${max}` : `${min}-${max}`;
+  return `${questionLabel} ${currentNumber} ${ofLabel} ${totalRange}`;
+}
+
+function setQuestionContext(questionId) {
+  const progress = document.getElementById("progress");
+  const currentContent = getRenderedQuestionLabel(questionId);
+  const progressText = getQuestionProgressText(questionId);
+  const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
+
+  document.title = `${appTitle} - ${progressText} - ${currentContent}`;
+
+  if (progress) {
+    progress.textContent = progressText;
+  }
+}
+
+function setResultsContext(recLabel = "") {
+  const progress = document.getElementById("progress");
+  const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
+  const resultsLabel = isSpanishLocale() ? "Resultados" : "Results";
+
+  document.title = recLabel
+    ? `${appTitle} - ${resultsLabel} - ${recLabel}`
+    : `${appTitle} - ${resultsLabel}`;
+
+  if (progress) {
+    progress.textContent = resultsLabel;
+  }
+}
+
 function getQuestionNextButtonLabel(questionId) {
   const nextQuestionId = getAdjacentQuestionId(questionId, 1);
 
@@ -1328,8 +1411,6 @@ function renderLocaleChrome() {
   if (documentTitle) {
     documentTitle.textContent = isSpanishLocale() ? getUiText("title") : APP_NAME;
   }
-
-  document.title = isSpanishLocale() ? getUiText("title") : APP_NAME;
 
   if (languageToggle) {
     languageToggle.setAttribute(
@@ -3256,9 +3337,9 @@ function renderRecommendations(recommendations, allRecommendations, answers, sco
   if (formNav) formNav.classList.add("hidden");
   if (backBtn) backBtn.classList.add("hidden");
   if (nextBtn) nextBtn.classList.add("hidden");
-  if (progress) progress.textContent = "";
 
   if (!recommendations.length) {
+    setResultsContext();
     result.classList.remove("hidden");
     result.innerHTML = `<strong>${isSpanishLocale() ? getUiText("noRecommendations") : "No recommendations available."}</strong>`;
     return;
@@ -3305,6 +3386,7 @@ function renderCurrentRecommendationPage() {
       ? (isSpanishLocale() ? getUiText("exploringResultsTitleText") : EXPLORING_RESULTS_TITLE_TEXT)
       : (isSpanishLocale() ? getUiText("resultsIntroText") : RESULTS_INTRO_TEXT);
   const resultsFocusSummary = getResultsFocusSummary(rec, answers, pathway);
+  setResultsContext(rec.label);
 
   result.classList.remove("hidden");
   result.removeAttribute("role");
@@ -3730,8 +3812,7 @@ function renderQuestion() {
   const renderedOptions = getRenderedQuestionOptions(questionId);
   const renderedLabel = getRenderedQuestionLabel(questionId);
   const savedValue = APP_STATE.answers[questionId] || "";
-
-progress.textContent = "";
+  setQuestionContext(questionId);
 
   if (question.type === "radio") {
     const usesRouteImages = questionId === "routeType";
