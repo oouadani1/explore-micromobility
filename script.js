@@ -1306,6 +1306,16 @@ function getDynamicCountLabel(current, total) {
   return `${current} of ${total}`;
 }
 
+function getQuestionNextButtonLabel(questionId) {
+  const nextQuestionId = getAdjacentQuestionId(questionId, 1);
+
+  if (!nextQuestionId) {
+    return isSpanishLocale() ? "Resultados" : "Results";
+  }
+
+  return isSpanishLocale() ? getUiText("nextQuestion") : "Next question";
+}
+
 function renderLocaleChrome() {
   const documentTitle = document.getElementById("documentTitle");
   const languageToggle = document.getElementById("languageToggle");
@@ -1356,7 +1366,7 @@ function renderLocaleChrome() {
   if (nextBtn) {
     nextBtn.setAttribute(
       "aria-label",
-      isSpanishLocale() ? getUiText("nextQuestion") : "Next question"
+      getQuestionNextButtonLabel(getCurrentQuestionId())
     );
   }
 }
