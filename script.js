@@ -143,7 +143,7 @@ const DEVICE_CONTENT = {
       deliveries: "",
       recreation: "",
       // Transit link
-      transitLinkYes: "Check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing a bicycle on a bus or train, and look into nearby station bike parking or bike shed options where available. See Next steps for more information.",
+      transitLinkYes: "Check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing a bicycle on a bus or train, and look into nearby station bike parking or bike shed options where available. Use the More resources section for more information.",
       transitLinkNo: "",
       // Carrying children
       carryChildrenYes: "If carrying a child is a priority, the right setup will depend on the child's age and the bike. Options can include a child seat, trailer, or tag-along attachment. Make sure they wear properly fitted helmets and are secured in appropriate seats or harnesses.",
@@ -213,7 +213,7 @@ const DEVICE_CONTENT = {
     considerBase: [
       "Choose e-bikes with batteries and electrical systems certified to Underwriters Laboratories (UL) safety standards.",
       "Since they can look similiar, be careful not to confuse an e-bike with a higher-powered e-moto or e-dirt bike, which are considered Off-Highway Vehicles (OHVs) and must be registered with the Massachusetts Environmental Police.",
-      "E-bikes come in three classes. See Next steps to select the best e-bike class for you."
+      "E-bikes come in three classes. Use the More resources section to select the best e-bike class for you."
     ],
     // CONSIDER CONDITIONAL
     // Active text slots under current logic: age14to16, age17to49, age50plus, transport, transitLinkYes
@@ -232,7 +232,7 @@ const DEVICE_CONTENT = {
       recreation: "",
       recreation: "",
       // Transit link
-      transitLinkYes: "Check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing a device on a bus or train, and look into nearby station bike parking or bike shed options where available. See Next steps for more information.",
+      transitLinkYes: "Check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing a device on a bus or train, and look into nearby station bike parking or bike shed options where available. Use the More resources section for more information.",
       transitLinkNo: "",
       // Carrying children
       carryChildrenYes: "When carrying children is part of the trip, common setups include a child seat, tag-along attachment, or trailer. Children should wear properly fitted helmets and use appropriate seats or harnesses.",
@@ -247,7 +247,7 @@ const DEVICE_CONTENT = {
       routeRegularRoads: "",
       routeTrails: "",
       // Storage
-      storageIndoor: "Follow safe charging practices when storing an e-bike indoors to avoid the risk of thermal runaway and fire. See Next steps for more information on safe charging.",
+      storageIndoor: "Follow safe charging practices when storing an e-bike indoors to avoid the risk of thermal runaway and fire. Use the More resources section for information on safe charging.",
       storageOutdoor: "When storing an e-bike outdoors, always remove the battery, consider a high-quality lock, and ensure it is parked in a safe place.",
       storageNotMajorConcern: ""
     },
@@ -318,7 +318,7 @@ const DEVICE_CONTENT = {
       deliveries: "",
       recreation: "",
       // Transit link
-      transitLinkYes: "Given you use transit during your commute, check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing an e-scooter onto a bus or train. See Next steps for more information on micromobility and transit.",
+      transitLinkYes: "Given you use transit during your commute, check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing an e-scooter onto a bus or train. Use the More resources section for more information on micromobility and transit.",
       transitLinkNo: "",
       // Carrying children
       carryChildrenYes: "",
@@ -333,7 +333,7 @@ const DEVICE_CONTENT = {
       routeRegularRoads: "",
       routeTrails: "",
       // Storage
-      storageIndoor: "Follow safe charging practices when storing an e-scooter indoors to avoid the risk of thermal runaway and fire. See Next steps for more information on safe charging.",
+      storageIndoor: "Follow safe charging practices when storing an e-scooter indoors to avoid the risk of thermal runaway and fire. Use the More resources section for information on safe charging.",
       storageOutdoor: "",
       storageNotMajorConcern: ""
     },
@@ -399,7 +399,7 @@ const DEVICE_CONTENT = {
       deliveries: "",
       recreation: "",
       // Transit link
-      transitLinkYes: "Given you use transit during your commute, check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing these devices onto a bus or train. See Next steps for more information on micromobility and transit. Additionally, while small, these devices can be heavy to carry. Consider a specialized backpack to carry them with.",
+      transitLinkYes: "Given you use transit during your commute, check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing these devices onto a bus or train. Use the More resources section for more information on micromobility and transit. Additionally, while small, these devices can be heavy to carry. Consider a specialized backpack to carry them with.",
       transitLinkNo: "",
       // Carrying children
       carryChildrenYes: "",
@@ -414,7 +414,7 @@ const DEVICE_CONTENT = {
       routeRegularRoads: "",
       routeTrails: "Check your local park or trail rules before purchasing a compact e-device, as some municipalities do not allow them.",
       // Storage
-      storageIndoor: "Follow safe charging practices when storing a compact e-device indoors to avoid the risk of thermal runaway and fire. See Next steps for more information on safe charging.",
+      storageIndoor: "Follow safe charging practices when storing a compact e-device indoors to avoid the risk of thermal runaway and fire. Use the More resources section for information on safe charging.",
       storageOutdoor: "",
       storageNotMajorConcern: ""
     },
@@ -494,7 +494,7 @@ const DEVICE_CONTENT = {
       routeRegularRoads: "",
       routeTrails: "",
       // Storage
-      storageIndoor: "Cargo bikes are not ideal to store indoors because of their heavy weight and length. If you plan to store one inside a shed or garage and it has a battery, follow safe charging practices to avoid the risk of thermal runaway and fire. See Next steps for more information on safe charging.",
+      storageIndoor: "Cargo bikes are not ideal to store indoors because of their heavy weight and length. If you plan to store one inside a shed or garage and it has a battery, follow safe charging practices to avoid the risk of thermal runaway and fire. Use the More resources section for information on safe charging.",
       storageOutdoor: "If you plan to to store a cargo bike outdoors, always remove the battery (if it has one), consider a high-quality lock and weatherproof tarp, and ensure it is parked in a safe place.",
       storageNotMajorConcern: ""
     },
@@ -3599,13 +3599,11 @@ function announceStepError(message) {
 
   liveRegionEl.textContent = "";
 
-  window.requestAnimationFrame(() => {
-    window.requestAnimationFrame(() => {
-      if (document.getElementById("stepErrorLive") === liveRegionEl) {
-        liveRegionEl.textContent = message;
-      }
-    });
-  });
+  window.setTimeout(() => {
+    if (document.getElementById("stepErrorLive") === liveRegionEl) {
+      liveRegionEl.textContent = message;
+    }
+  }, 50);
 }
 
 function submitCurrentAnswers() {
@@ -3810,7 +3808,6 @@ function renderQuestion() {
     const describedByIds = ["stepError"].join(" ");
     formStep.innerHTML = `
       <div class="question-block">
-        <div id="stepErrorLive" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
         <fieldset class="question-fieldset" ${describedByIds ? `aria-describedby="${describedByIds}"` : ""}>
           <legend id="${legendId}" class="question-label">${renderedLabel}</legend>
           <div class="option-grid option-grid-${Math.min(renderedOptions.length, 4)}">
@@ -3892,7 +3889,6 @@ function renderQuestion() {
  const describedByIds = ["stepError"].join(" ");
   formStep.innerHTML = `
     <div class="question-block">
-      <div id="stepErrorLive" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
       <label for="${questionId}" class="question-label">${renderedLabel}</label>
       <input
         id="${questionId}"

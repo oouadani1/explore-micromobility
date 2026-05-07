@@ -289,7 +289,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
         ],
         considerConditional: {
           transitLinkYes:
-            "Revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de llevar una bicicleta en autobús o tren, y busca opciones de estacionamiento o cobertizos para bicicletas cerca de la estación cuando existan. Consulta Próximos pasos para más información.",
+            "Revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de llevar una bicicleta en autobús o tren, y busca opciones de estacionamiento o cobertizos para bicicletas cerca de la estación cuando existan. Usa la sección Más recursos para más información.",
           carryChildrenYes:
             "Si llevar niños es una prioridad, la mejor opción dependerá de la edad del niño o niña y del tipo de bicicleta. Puede convenir un asiento infantil, un remolque o una bicicleta de arrastre. Asegúrate de que usen casco bien ajustado y que vayan sujetos en asientos o arneses adecuados.",
           distance10plus:
@@ -323,7 +323,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
         considerBase: [
           "Elige bicicletas eléctricas con baterías y sistemas eléctricos certificados según los estándares de seguridad de Underwriters Laboratories (UL).",
           "Como a veces se parecen, no confundas una bicicleta eléctrica con una e-moto o una e-dirt bike de mayor potencia, que se consideran vehículos todoterreno y deben registrarse ante la Policía Ambiental de Massachusetts.",
-          "Las bicicletas eléctricas se dividen en tres clases. Consulta Próximos pasos para elegir la clase que mejor te convenga."
+          "Las bicicletas eléctricas se dividen en tres clases. Usa la sección Más recursos para elegir la clase que mejor te convenga."
         ],
         considerConditional: {
           age14to16:
@@ -331,11 +331,11 @@ window.MICROMOBILITY_TRANSLATIONS = {
           deliveries:
             "Da prioridad a un modelo con batería removible de alta capacidad, frenos potentes y motor central si hay cuestas o cargas pesadas.",
           transitLinkYes:
-            "Revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de llevar el dispositivo en autobús o tren, y busca opciones de estacionamiento o cobertizos para bicicletas cerca de la estación cuando existan. Consulta Próximos pasos para más información.",
+            "Revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de llevar el dispositivo en autobús o tren, y busca opciones de estacionamiento o cobertizos para bicicletas cerca de la estación cuando existan. Usa la sección Más recursos para más información.",
           carryChildrenYes:
             "Si se van a llevar niños, conviene considerar accesorios como un asiento infantil, un remolque o un accesorio de bicicleta de arrastre. Asegúrate de que usen casco bien ajustado y que vayan sujetos en asientos o arneses adecuados.",
           storageIndoor:
-            "Sigue prácticas seguras de carga si la bicicleta eléctrica se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Consulta Próximos pasos para más información sobre carga segura.",
+            "Sigue prácticas seguras de carga si la bicicleta eléctrica se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Usa la sección Más recursos para información sobre carga segura.",
           storageOutdoor:
             "Si la bicicleta eléctrica se guardará afuera, quita siempre la batería, usa un candado de buena calidad y procura dejarla en un lugar seguro."
         },
@@ -363,13 +363,13 @@ window.MICROMOBILITY_TRANSLATIONS = {
         ],
         considerConditional: {
           transitLinkYes:
-            "Si el transporte público forma parte del viaje, revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de subir un scooter eléctrico a un autobús o tren. Consulta Próximos pasos para más información sobre micromovilidad y transporte público.",
+            "Si el transporte público forma parte del viaje, revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de subir un scooter eléctrico a un autobús o tren. Usa la sección Más recursos para más información sobre micromovilidad y transporte público.",
           routeBikeLanes:
             "Por sus ruedas pequeñas, la posición de pie y la falta de suspensión, los scooters eléctricos funcionan mejor en ciclovías y superficies lisas.",
           routeMixedRoads:
             "Por sus ruedas pequeñas, la posición de pie y la falta de suspensión, los scooters eléctricos pueden sentirse menos cómodos en calles irregulares o con más tráfico. Considera un modelo con suspensión y llantas para todo clima.",
           storageIndoor:
-            "Sigue prácticas seguras de carga si el scooter eléctrico se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Consulta Próximos pasos para más información sobre carga segura."
+            "Sigue prácticas seguras de carga si el scooter eléctrico se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Usa la sección Más recursos para información sobre carga segura."
         },
         nextSteps: [
           { label: "Aprende más sobre scooters eléctricos", url: "https://canva.link/cp01o7oz44c6k3x" }
@@ -394,11 +394,11 @@ window.MICROMOBILITY_TRANSLATIONS = {
           transport:
             "Aunque pueden servir para viajes cortos al trabajo o a hacer mandados, conviene sentirse cómodo moviéndose sobre dos ruedas en zonas concurridas antes de elegir uno.",
           transitLinkYes:
-            "Si el transporte público forma parte del viaje, revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de subir estos dispositivos a un autobús o tren. Consulta Próximos pasos para más información sobre micromovilidad y transporte público. Aunque son pequeños, algunos pueden ser pesados para cargarlos; un bolso o arnés especializado puede ayudar.",
+            "Si el transporte público forma parte del viaje, revisa las reglas de la MBTA o de tu autoridad local de tránsito regional (RTA) antes de subir estos dispositivos a un autobús o tren. Usa la sección Más recursos para más información sobre micromovilidad y transporte público. Aunque son pequeños, algunos pueden ser pesados para cargarlos; un bolso o arnés especializado puede ayudar.",
           routeTrails:
             "Revisa las reglas locales del parque o sendero antes de comprar uno, ya que algunos municipios no los permiten.",
           storageIndoor:
-            "Sigue prácticas seguras de carga si el dispositivo eléctrico compacto se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Consulta Próximos pasos para más información sobre carga segura."
+            "Sigue prácticas seguras de carga si el dispositivo eléctrico compacto se guardará adentro para reducir el riesgo de sobrecalentamiento y fuego. Usa la sección Más recursos para información sobre carga segura."
         },
         nextSteps: [
           { label: "Aprende más sobre dispositivos eléctricos compactos", url: "https://canva.link/tryse3p99aay4kh" }
@@ -431,13 +431,13 @@ window.MICROMOBILITY_TRANSLATIONS = {
           distance10plus:
             "Si la mayoría de los viajes serán largos, conviene considerar una bicicleta de carga eléctrica.",
           storageIndoor:
-            "Las bicicletas de carga no suelen ser ideales para guardarlas adentro por su peso y largo. Si se guardarán en un cobertizo o garaje y tienen batería, sigue prácticas seguras de carga para reducir el riesgo de sobrecalentamiento y fuego. Consulta Próximos pasos para más información sobre carga segura.",
+            "Las bicicletas de carga no suelen ser ideales para guardarlas adentro por su peso y largo. Si se guardarán en un cobertizo o garaje y tienen batería, sigue prácticas seguras de carga para reducir el riesgo de sobrecalentamiento y fuego. Usa la sección Más recursos para información sobre carga segura.",
           storageOutdoor:
             "Si se guardará afuera, quita siempre la batería si la tiene, usa un candado de buena calidad y una cubierta impermeable, y procura dejarla en un lugar seguro."
         },
         nextSteps: [
           { label: "Aprende más sobre bicicletas de carga", url: "https://canva.link/mxd4tl2ztz66udv" },
-          { label: "Pide prestada una bicicleta de carga gratis para ver si es adecuada para ti", url: "https://cpp.ebikelibrary.org/" },
+          { label: "Pide prestada una bicicleta de carga gratis para saber si puede ser adecuada para ti", url: "https://cpp.ebikelibrary.org/" },
           { label: "Visita una tienda local de bicicletas", url: "https://nbda.com/dealer-finder-member-directory/#!directory/map/tag=Massachusetts" },
           { label: "Más tiendas en Pinkbike", url: "https://www.pinkbike.com/directory/list/massachusetts/2/bike-shop/" },
           { label: "Más tiendas en Singletracks", url: "https://www.singletracks.com/bike-shops/region/massachusetts/" }
