@@ -35,24 +35,24 @@ const OUTPUTS = {
 
 const APP_NAME = "Explore Micromobility";
 const INTRO_TEXT =
-  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.";
+  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.";
 const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     introText:
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results."
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results."
   },
   es: {
     heroTitle: "Explore Micromobility",
     introText:
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. La mayoría de los recorridos toman de 7 a 9 preguntas para encontrar dispositivos de micromovilidad que podrían funcionar para ti. Al seleccionar una respuesta, se abre la siguiente pregunta. En la pregunta sobre la edad, escribe una edad y usa Siguiente. La última respuesta abre tus resultados."
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. Esta herramienta muestra una pregunta en cada pantalla. La mayoría de los recorridos toman de 7 a 9 preguntas para encontrar dispositivos de micromovilidad que podrían funcionar para ti. Al seleccionar una respuesta, se abre la siguiente pregunta. En la pregunta sobre la edad, escribe una edad y usa Siguiente. La última respuesta abre tus resultados."
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
 const EXPLORING_RESULTS_TITLE_TEXT = "Explore micromobility options.";
 const SCORING_DISCLAIMER_TEXT =
   "Explore Micromobility is an informational resource. It does not provide legal, safety, financial, or purchasing advice, and it does not endorse specific products, brands, sellers, or services. Review current laws, local rules, and product details before riding, renting, or purchasing.";
-const RESULTS_METHODS_SUMMARY_TEXT = "How results are shown";
+const RESULTS_METHODS_SUMMARY_TEXT = "Why we chose these options";
 const RESULTS_METHODS_TITLE_TEXT = "How the Micromobility Explorer works";
 const RESULTS_METHODS_OVERVIEW_TEXT =
   "This tool gives different device types more or fewer points based on your answers. After that, a few extra checks help decide which options show up in the results.";
@@ -2579,7 +2579,7 @@ function renderAllDeviceResultsPanel(allRecommendations, answers) {
         id="all-results-trigger"
         aria-expanded="${APP_STATE.allResultsPanelOpen ? "true" : "false"}"
         aria-controls="all-results-panel"
-      >${isSpanishLocale() ? getUiText("seeAllDeviceTypes") : "See other relevant devices"}</button>
+      >${isSpanishLocale() ? getUiText("seeAllDeviceTypes") : "Other micromobility options for you"}</button>
       <div
         id="all-results-panel"
         aria-labelledby="all-results-trigger"
