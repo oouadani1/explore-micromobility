@@ -2965,7 +2965,7 @@ function getConditionalNextSteps(recId, answers) {
   return steps;
 }
 
-function renderSingleRecommendationCard(rec, answers, pathway) {
+function renderSingleRecommendationCard(rec, answers, pathway, resultsMethodologyHtml = "") {
   const content = getDeviceContent(rec.id);
   const considerationItems = getResultCardConsiderationItems(rec.id, answers, content);
   const recommendationTitleId = `recommendation-title-${rec.id}`;
@@ -2975,6 +2975,7 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
   const recommendationGuidanceId = `recommendation-guidance-${rec.id}`;
   const recommendationGuidanceHeadingId = `recommendation-guidance-heading-${rec.id}`;
   const recommendationCostId = `recommendation-cost-${rec.id}`;
+  const recommendationLearnMoreId = `recommendation-learn-more-${rec.id}`;
   const recommendationNextStepsId = `recommendation-next-steps-${rec.id}`;
   const recommendationNextStepsHeadingId = `recommendation-next-steps-heading-${rec.id}`;
   const rationaleHeading =
@@ -3030,7 +3031,9 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
     })
     .join("");
 
-  const nextSteps = [...getNextSteps(rec.id), ...getConditionalNextSteps(rec.id, answers)]
+  const baseNextSteps = getNextSteps(rec.id);
+  const learnMoreStep = baseNextSteps[0] || null;
+  const nextSteps = [...baseNextSteps.slice(1), ...getConditionalNextSteps(rec.id, answers)]
     .filter((step, index, allSteps) =>
       allSteps.findIndex((candidate) => candidate.url === step.url) === index
     )
@@ -3087,6 +3090,13 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
   const imageSrc = getRecommendationImage(rec.id, answers, content);
   const imageTag = getRecommendationImageTag(rec.id, answers);
   const costLabel = isSpanishLocale() ? getUiText("typicalCost") : "Typical cost";
+  const learnMoreHtml = learnMoreStep
+    ? `
+        <p id="${recommendationLearnMoreId}" class="guidance-learn-more">
+          <a href="${learnMoreStep.url}" target="_blank" rel="noopener noreferrer">${formatTextForPathway(learnMoreStep.label, pathway)}</a>
+        </p>
+      `
+    : "";
 
   return `
     <section
@@ -3112,6 +3122,8 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
         ${getRecommendationReason(rec.id, answers, pathway)}
       </p>
 
+      ${resultsMethodologyHtml}
+
       <div
         id="${recommendationGuidanceId}"
         class="guidance"
@@ -3131,6 +3143,7 @@ function renderSingleRecommendationCard(rec, answers, pathway) {
           <span class="device-cost-label">${costLabel}:</span>
           <span class="device-cost-value">${content.cost}</span>
         </p>
+        ${learnMoreHtml}
       </div>
 
       <div
@@ -3274,10 +3287,10 @@ function renderCurrentRecommendationPage() {
   if (!recommendations.length || !answers) return;
 
   const rec = recommendations[index];
-  const cardHtml = renderSingleRecommendationCard(rec, answers, pathway);
+  const resultsMethodologyHtml = renderResultsMethodology(answers);
+  const cardHtml = renderSingleRecommendationCard(rec, answers, pathway, resultsMethodologyHtml);
   const allResultsPanelHtml =
     pathway === "exploring" ? "" : renderAllDeviceResultsPanel(allRecommendations, answers);
-  const resultsMethodologyHtml = renderResultsMethodology(answers);
   const printSummaryHtml = renderPrintSummary(
     recommendations,
     answers,
@@ -3306,7 +3319,6 @@ function renderCurrentRecommendationPage() {
     ${cardHtml}
 
     ${allResultsPanelHtml}
-    ${resultsMethodologyHtml}
 
     <div class="results-toolbar">
       <div class="results-pager">
