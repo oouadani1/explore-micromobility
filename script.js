@@ -3692,7 +3692,6 @@ function renderQuestion() {
   const nextBtn = document.getElementById("nextBtn");
   const intro = document.getElementById("introText");
   const heroTitle = document.getElementById("heroTitle");
-  const introDescriptionId = APP_STATE.currentStep === 0 ? "introText" : "";
 
   if (!formStep || !progress || !backBtn || !nextBtn) return;
 
@@ -3725,7 +3724,7 @@ progress.textContent = "";
   if (question.type === "radio") {
     const usesRouteImages = questionId === "routeType";
     const legendId = `${questionId}-legend`;
-    const describedByIds = [introDescriptionId, "stepError"].filter(Boolean).join(" ");
+    const describedByIds = ["stepError"].join(" ");
     formStep.innerHTML = `
       <div class="question-block">
         <div id="stepErrorLive" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
@@ -3807,7 +3806,7 @@ progress.textContent = "";
   }
 
  if (question.type === "number") {
- const describedByIds = [introDescriptionId, "stepError"].filter(Boolean).join(" ");
+ const describedByIds = ["stepError"].join(" ");
   formStep.innerHTML = `
     <div class="question-block">
       <div id="stepErrorLive" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
