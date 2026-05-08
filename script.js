@@ -35,19 +35,19 @@ const OUTPUTS = {
 
 const APP_NAME = "Explore Micromobility";
 const INTRO_TEXT =
-  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.";
+  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Selecting an answer automatically opens the next question, and the last question opens your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law.";
 const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
     introText:
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. The tool shows one question at a time. Most people answer 7 to 9 questions. Selecting an answer opens the next question. If the tool asks for age, enter a whole number, then select Next. The last question opens your results. The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs."
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Selecting an answer automatically opens the next question, and the last question opens your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law."
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
     introText:
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. La herramienta muestra una pregunta a la vez. La mayoría de las personas responde entre 7 y 9 preguntas. Al seleccionar una respuesta, se abre la siguiente pregunta. Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente. La última pregunta abre tus resultados. La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades."
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más, a partir de responder algunas preguntas. La herramienta muestra una pregunta a la vez y tiene como máximo 9 preguntas, según tus selecciones. Al seleccionar una respuesta, se abre automáticamente la siguiente pregunta y la última pregunta abre tus resultados. Explore Micromobility muestra estos dispositivos usando un sistema aditivo simple basado en tus respuestas. Este sistema de puntuación se basa en las reglas propuestas por la Special Commission on Micromobility y la ley general vigente de Massachusetts."
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
