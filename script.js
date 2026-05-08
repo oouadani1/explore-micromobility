@@ -1351,12 +1351,14 @@ function getPossibleQuestionTotals(rawAnswers = APP_STATE.answers) {
 
 function getQuestionProgressText(questionId) {
   const currentNumber = findQuestionIndex(questionId) + 1;
-  const { min, max } = getPossibleQuestionTotals(APP_STATE.answers);
+  const isLastQuestion = !getAdjacentQuestionId(questionId, 1);
   const questionLabel = isSpanishLocale() ? "Pregunta" : "Question";
-  const ofLabel = isSpanishLocale() ? getUiText("countOf") : "of";
+  const lastQuestionLabel = isSpanishLocale()
+    ? getUiText("lastQuestion")
+    : "Last Question";
 
-  if (min === max) {
-    return `${questionLabel} ${currentNumber} ${ofLabel} ${max}`;
+  if (isLastQuestion) {
+    return lastQuestionLabel;
   }
 
   return `${questionLabel} ${currentNumber}`;
@@ -1366,8 +1368,6 @@ function setQuestionContext(questionId) {
   const progress = document.getElementById("progress");
   const currentContent = getRenderedQuestionLabel(questionId);
   const progressText = getQuestionProgressText(questionId);
-  const currentNumber = findQuestionIndex(questionId) + 1;
-  const { min, max } = getPossibleQuestionTotals(APP_STATE.answers);
   const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
 
   document.title = `${appTitle} - ${progressText} - ${currentContent}`;
@@ -1375,14 +1375,7 @@ function setQuestionContext(questionId) {
   if (progress) {
     progress.textContent = progressText;
     progress.removeAttribute("aria-hidden");
-    progress.setAttribute(
-      "aria-label",
-      min === max
-        ? progressText
-        : isSpanishLocale()
-          ? `Pregunta ${currentNumber} de hasta ${max}`
-          : `Question ${currentNumber} of up to ${max}`
-    );
+    progress.setAttribute("aria-label", progressText);
   }
 }
 
@@ -2547,14 +2540,33 @@ function renderResultsMethodology(answers) {
 function renderAllDeviceResultsPanel(allRecommendations, answers) {
   const panelRecommendations = allRecommendations
     .filter((rec) => rec.score > 0)
-    .slice(2);
+    .slice(2)
+    .map((rec, index) => {
+      const topPanelScore = allRecommendations[2]?.score ?? rec.score;
+      const priority = getRecommendationPriorityMeta(index, rec.score, topPanelScore, rec.id, answers);
+      return {
+        ...rec,
+        priority,
+        priorityRank: priority.className === "all-results-tag-suggested" ? 0 : 1
+      };
+    })
+    .sort((a, b) => {
+      if (a.priorityRank !== b.priorityRank) {
+        return a.priorityRank - b.priorityRank;
+      }
+
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      return a.label.localeCompare(b.label);
+    });
   if (!panelRecommendations.length) return "";
 
-  const topPanelScore = panelRecommendations[0]?.score ?? 0;
   const itemsHtml = panelRecommendations
     .map((rec, index) => {
       const imageSrc = getAllResultsImage(rec.id, answers);
-      const priority = getRecommendationPriorityMeta(index, rec.score, topPanelScore, rec.id, answers);
+      const priority = rec.priority;
       const rawReason = getAllResultsReason(rec, answers, priority);
       const reason = isSpanishLocale()
         ? rawReason
