@@ -54,10 +54,7 @@ const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility
 const EXPLORING_RESULTS_TITLE_TEXT = "Explore micromobility options.";
 const SCORING_DISCLAIMER_TEXT =
   "Explore Micromobility is an informational resource. It does not provide legal, safety, financial, or purchasing advice, and it does not endorse specific products, brands, sellers, or services. Review current laws, local rules, and product details before riding, renting, or purchasing.";
-const RESULTS_METHODS_SUMMARY_TEXT = "Why we chose these options";
-const RESULTS_METHODS_TITLE_TEXT = "How the Micromobility Explorer works";
-const RESULTS_METHODS_OVERVIEW_TEXT =
-  "These results use your answers, current Massachusetts rules, and current program information to show the options that best fit what you entered.";
+const RESULTS_METHODS_SUMMARY_TEXT = "Why these options were shown";
 const RESULTS_METHODS_VISIBILITY_TITLE_TEXT = "Why some options may not show up";
 const RESULTS_METHODS_SCORING_TITLE_TEXT = "Your responses";
 const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What helped show these options";
@@ -2527,9 +2524,6 @@ function renderResultsMethodology(answers) {
         ${APP_STATE.resultsMethodologyOpen ? "" : "hidden"}
         data-accordion-panel
       >
-        <h3 class="results-methodology__title">${isSpanishLocale() ? getUiText("howExplorerWorks") : RESULTS_METHODS_TITLE_TEXT}</h3>
-        <p>${isSpanishLocale() ? getUiText("resultsOverviewText") : RESULTS_METHODS_OVERVIEW_TEXT}</p>
-
         <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("currentVisibilityRules") : RESULTS_METHODS_VISIBILITY_TITLE_TEXT}</h3>
         <ul class="results-methodology__list">${visibilityLawNotesHtml}</ul>
 
@@ -2591,7 +2585,7 @@ function renderAllDeviceResultsPanel(allRecommendations, answers) {
         id="all-results-trigger"
         aria-expanded="${APP_STATE.allResultsPanelOpen ? "true" : "false"}"
         aria-controls="all-results-panel"
-      >${isSpanishLocale() ? getUiText("seeAllDeviceTypes") : "Other micromobility options for you"}</button>
+      >${isSpanishLocale() ? getUiText("seeAllDeviceTypes") : "Other possible micromobility options"}</button>
       <div
         id="all-results-panel"
         aria-labelledby="all-results-trigger"

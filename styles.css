@@ -368,6 +368,15 @@ button.hidden {
   text-decoration-thickness: 2px;
 }
 
+.guidance-learn-more a {
+  color: var(--text-blue-aa);
+  text-decoration: underline;
+}
+
+.guidance-learn-more a:hover {
+  text-decoration-thickness: 2px;
+}
+
 .recommendation-reason {
   font-size: 0.95rem;
   color: #000000;
@@ -1795,6 +1804,10 @@ body.results-view-active #result {
   background: var(--surface-panel);
   border: 1px solid rgba(20, 85, 143, 0.1);
   box-shadow: 0 10px 24px rgba(24, 59, 91, 0.06);
+}
+
+.results-methodology {
+  margin-top: 24px;
 }
 
 .details-toggle-btn {
