@@ -10,20 +10,26 @@
 <body>
   <main class="container">
     <section class="card">
-      <div class="landing-header">
-        <h1 id="heroTitle">Explore Micromobility</h1>
+      <section id="landingView" class="landing-view">
+        <div class="landing-header">
+          <h1 id="heroTitle">Explore Micromobility</h1>
 
-        <div id="landingControls" class="landing-controls">
-          <div id="languageToggle" class="language-toggle" role="group" aria-label="Language toggle">
-            <button id="langEnBtn" type="button" class="language-toggle__button is-active" aria-pressed="true">English</button>
-            <button id="langEsBtn" type="button" class="language-toggle__button" aria-pressed="false">Español</button>
+          <div id="landingControls" class="landing-controls">
+            <div id="languageToggle" class="language-toggle" role="group" aria-label="Language toggle">
+              <button id="langEnBtn" type="button" class="language-toggle__button is-active" aria-pressed="true">English</button>
+              <button id="langEsBtn" type="button" class="language-toggle__button" aria-pressed="false">Español</button>
+            </div>
           </div>
         </div>
-      </div>
 
-     <p id="introText" class="intro">
-  Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.
-    </p>
+        <p id="introText" class="intro">
+          Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results.
+        </p>
+
+        <div class="landing-actions">
+          <button id="startExploringBtn" type="button" class="landing-start-btn">Start exploring</button>
+        </div>
+      </section>
 
 
       <div id="progress" class="recommendation-disclaimer"></div>
@@ -48,7 +54,7 @@
             <h3 class="question-audit-variant-title">Standard flow</h3>
             <ol class="question-audit-list">
               <li class="question-audit-item">
-                <h4 class="question-audit-question">Who are you purchasing for?</h4>
+                <h4 class="question-audit-question">Who is this for?</h4>
                 <ul class="question-audit-options">
                   <li class="question-audit-option">Myself</li>
                   <li class="question-audit-option">Someone else</li>
@@ -113,7 +119,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Transport variant</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old are you?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Do you have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will you mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">Getting to work, school, or errands</li><li class="question-audit-option">Deliveries or work</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -132,7 +138,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Standard flow</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the rider?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the rider have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the rider mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">Getting to work, school, or errands</li><li class="question-audit-option">Deliveries or work</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -146,7 +152,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Transport variant</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the rider?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the rider have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the rider mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">Getting to work, school, or errands</li><li class="question-audit-option">Deliveries or work</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -165,7 +171,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Child under 18</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the child?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the child have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the child mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">School, commuting, or errands</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -178,7 +184,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Child under 18 transport variant</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the child?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the child have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the child mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">School, commuting, or errands</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -192,7 +198,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Child age 18 or older</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the child?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the child have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the child mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">School, commuting, or errands</li><li class="question-audit-option">Deliveries or work</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -205,7 +211,7 @@
           <section class="question-audit-variant">
             <h3 class="question-audit-variant-title">Child age 18 or older transport variant</h3>
             <ol class="question-audit-list">
-              <li class="question-audit-item"><h4 class="question-audit-question">Who are you purchasing for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
+              <li class="question-audit-item"><h4 class="question-audit-question">Who is this for?</h4><ul class="question-audit-options"><li class="question-audit-option">Myself</li><li class="question-audit-option">Someone else</li><li class="question-audit-option">A child</li><li class="question-audit-option">Explore all device options</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">How old is the child?</h4><p class="question-audit-note">Response type: number input</p></li>
               <li class="question-audit-item"><h4 class="question-audit-question">Does the child have a mobility disability or mobility need?</h4><ul class="question-audit-options"><li class="question-audit-option">Yes</li><li class="question-audit-option">No</li></ul></li>
               <li class="question-audit-item"><h4 class="question-audit-question">What will the child mostly use the device for?</h4><ul class="question-audit-options"><li class="question-audit-option">School, commuting, or errands</li><li class="question-audit-option">Deliveries or work</li><li class="question-audit-option">Recreation or exercise</li></ul></li>
@@ -223,7 +229,7 @@
             <h3 class="question-audit-variant-title">Explore-only flow</h3>
             <ol class="question-audit-list">
               <li class="question-audit-item">
-                <h4 class="question-audit-question">Who are you purchasing for?</h4>
+                <h4 class="question-audit-question">Who is this for?</h4>
                 <ul class="question-audit-options">
                   <li class="question-audit-option">Myself</li>
                   <li class="question-audit-option">Someone else</li>

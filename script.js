@@ -39,11 +39,13 @@ const INTRO_TEXT =
 const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
+    startButtonText: "Start exploring",
     introText:
       "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results."
   },
   es: {
     heroTitle: "Explore Micromobility",
+    startButtonText: "Comenzar a explorar",
     introText:
       "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. Esta herramienta muestra una pregunta en cada pantalla. La mayoría de los recorridos toman de 7 a 9 preguntas para encontrar dispositivos de micromovilidad que podrían funcionar para ti. Al seleccionar una respuesta, se abre la siguiente pregunta. En la pregunta sobre la edad, escribe una edad y usa Siguiente. La última respuesta abre tus resultados."
   }
@@ -1204,6 +1206,7 @@ const ROUTE_OPTION_MEDIA = {
 };
 
 const APP_STATE = {
+  hasStarted: false,
   currentStep: 0,
   answers: {},
   locale: "en",
@@ -3275,6 +3278,7 @@ function getResultsFocusSummary(rec, answers, pathway) {
 }
 
 function resetAppState() {
+  APP_STATE.hasStarted = true;
   APP_STATE.currentStep = 0;
   APP_STATE.currentResultIndex = 0;
   APP_STATE.allResultsPanelOpen = false;
@@ -3287,45 +3291,25 @@ function resetAppState() {
   APP_STATE.answers = {};
 }
 
-function resetIntroState() {
-  const intro = document.getElementById("introText");
-  const heroTitle = document.getElementById("heroTitle");
+function toggleLandingView(isVisible) {
+  const landingView = document.getElementById("landingView");
+  if (!landingView) return;
 
-  renderLandingCopy();
-
-  if (intro) {
-    intro.classList.remove("hidden");
-    intro.classList.remove("results-state");
-  }
-
-  if (heroTitle) {
-    heroTitle.classList.remove("hidden");
-  }
-
-
+  landingView.classList.toggle("hidden", !isVisible);
 }
 
 function renderRecommendations(recommendations, allRecommendations, answers, scores, pathway) {
   const result = document.getElementById("result");
-  const intro = document.getElementById("introText");
-  const heroTitle = document.getElementById("heroTitle");
   const formStep = document.getElementById("formStep");
   const formNav = document.getElementById("formNav");
-  const progress = document.getElementById("progress");
   const backBtn = document.getElementById("backBtn");
   const nextBtn = document.getElementById("nextBtn");
 
   setAppViewMode("results");
+  document.documentElement.lang = APP_STATE.locale;
+  renderLocaleChrome();
+  toggleLandingView(false);
   updateLandingLanguageToggle();
-
-  if (intro) {
-    intro.classList.add("hidden");
-    intro.classList.remove("results-state");
-  }
-
-  if (heroTitle) {
-    heroTitle.classList.add("hidden");
-  }
 
   setLandingHeaderVisibility(false);
 
@@ -3508,7 +3492,6 @@ function renderCurrentRecommendationPage() {
   restartBtns.forEach((restartBtn) => {
     restartBtn.addEventListener("click", () => {
       resetAppState();
-      resetIntroState();
       renderQuestion();
     });
   });
@@ -3678,6 +3661,7 @@ function getRenderedQuestionOptions(questionId) {
 }
 
 function setAppViewMode(mode) {
+  document.body.classList.toggle("landing-view-active", mode === "landing");
   document.body.classList.toggle("question-flow-active", mode === "question");
   document.body.classList.toggle("results-view-active", mode === "results");
 }
@@ -3690,7 +3674,7 @@ function updateLandingLanguageToggle() {
   const enBtn = document.getElementById("langEnBtn");
   const esBtn = document.getElementById("langEsBtn");
   const landingControls = document.getElementById("landingControls");
-  const showLandingControls = APP_STATE.currentStep === 0;
+  const showLandingControls = !APP_STATE.hasStarted;
 
   if (landingControls) {
     landingControls.classList.toggle("hidden", !showLandingControls);
@@ -3746,10 +3730,14 @@ function setLandingHeaderVisibility(isVisible) {
 function renderLandingCopy() {
   const intro = document.getElementById("introText");
   const heroTitle = document.getElementById("heroTitle");
+  const startExploringBtn = document.getElementById("startExploringBtn");
+  const progress = document.getElementById("progress");
   const copy = getLandingLocaleCopy();
+  const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
 
   document.documentElement.lang = APP_STATE.locale;
   renderLocaleChrome();
+  document.title = appTitle;
 
   if (heroTitle) {
     heroTitle.textContent = copy.heroTitle;
@@ -3759,11 +3747,58 @@ function renderLandingCopy() {
     intro.textContent = copy.introText;
   }
 
+  if (startExploringBtn) {
+    startExploringBtn.textContent = copy.startButtonText;
+  }
+
+  if (progress) {
+    progress.textContent = "";
+  }
+
   renderFooterDisclaimer();
   setFooterDisclaimerVisibility(true);
   setLandingHeaderVisibility(true);
 
   updateLandingLanguageToggle();
+}
+
+function renderLandingScreen({ focusStartButton = false } = {}) {
+  const formStep = document.getElementById("formStep");
+  const result = document.getElementById("result");
+  const formNav = document.getElementById("formNav");
+  const backBtn = document.getElementById("backBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const startExploringBtn = document.getElementById("startExploringBtn");
+
+  APP_STATE.hasStarted = false;
+  setAppViewMode("landing");
+  renderLandingCopy();
+  toggleLandingView(true);
+
+  if (formStep) {
+    formStep.innerHTML = "";
+  }
+
+  if (result) {
+    result.classList.add("hidden");
+    result.innerHTML = "";
+  }
+
+  if (formNav) {
+    formNav.classList.add("hidden");
+  }
+
+  if (backBtn) {
+    backBtn.classList.add("hidden");
+  }
+
+  if (nextBtn) {
+    nextBtn.classList.add("hidden");
+  }
+
+  if (focusStartButton && startExploringBtn) {
+    startExploringBtn.focus();
+  }
 }
 
 function renderQuestion() {
@@ -3772,29 +3807,21 @@ function renderQuestion() {
   const result = document.getElementById("result");
   const backBtn = document.getElementById("backBtn");
   const nextBtn = document.getElementById("nextBtn");
-  const intro = document.getElementById("introText");
-  const heroTitle = document.getElementById("heroTitle");
 
   if (!formStep || !progress || !backBtn || !nextBtn) return;
 
+  APP_STATE.hasStarted = true;
   setAppViewMode("question");
-  renderLandingCopy();
-
-  if (intro) {
-    intro.classList.toggle("hidden", APP_STATE.currentStep > 0);
-  }
-
-  if (heroTitle) {
-    heroTitle.classList.toggle("hidden", APP_STATE.currentStep > 0);
-  }
-
-  setLandingHeaderVisibility(APP_STATE.currentStep === 0);
-  setFooterDisclaimerVisibility(APP_STATE.currentStep === 0);
+  document.documentElement.lang = APP_STATE.locale;
+  renderLocaleChrome();
+  renderFooterDisclaimer();
+  toggleLandingView(false);
+  setLandingHeaderVisibility(false);
+  setFooterDisclaimerVisibility(false);
 
   result.classList.add("hidden");
   result.innerHTML = "";
 
-  const sequence = getCurrentSequence();
   const questionId = getCurrentQuestionId();
   const question = getLocalizedQuestion(questionId);
   const renderedOptions = getRenderedQuestionOptions(questionId);
@@ -3883,6 +3910,12 @@ function renderQuestion() {
         }
       });
     });
+
+    const initialRadioTarget = formStep.querySelector(`input[name="${questionId}"]:checked`) ||
+      formStep.querySelector(`input[name="${questionId}"]`);
+    if (initialRadioTarget) {
+      initialRadioTarget.focus();
+    }
   }
 
  if (question.type === "number") {
@@ -3919,10 +3952,16 @@ function renderQuestion() {
   }
 }
 
-  backBtn.classList.toggle("hidden", APP_STATE.currentStep === 0);
+  backBtn.classList.remove("hidden");
   nextBtn.classList.toggle("hidden", question.type !== "number" && question.type !== "radio");
   backBtn.innerHTML = "&#8249;";
   nextBtn.innerHTML = "&#8250;";
+  backBtn.setAttribute(
+    "aria-label",
+    APP_STATE.currentStep === 0
+      ? (isSpanishLocale() ? getUiText("backToStart") : "Back to start")
+      : (isSpanishLocale() ? getUiText("previousQuestion") : "Previous question")
+  );
 
   const formNav = document.getElementById("formNav");
   if (formNav) {
@@ -4084,7 +4123,11 @@ function handleBack() {
   if (previousQuestionId) {
     setCurrentStepToQuestion(previousQuestionId);
     renderQuestion();
+    return;
   }
+
+  resetAppState();
+  renderLandingScreen({ focusStartButton: true });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -4092,6 +4135,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const nextBtn = document.getElementById("nextBtn");
   const langEnBtn = document.getElementById("langEnBtn");
   const langEsBtn = document.getElementById("langEsBtn");
+  const startExploringBtn = document.getElementById("startExploringBtn");
   
   if (backBtn) {
     backBtn.addEventListener("click", handleBack);
@@ -4104,18 +4148,26 @@ window.addEventListener("DOMContentLoaded", () => {
   if (langEnBtn) {
     langEnBtn.addEventListener("click", () => {
       APP_STATE.locale = "en";
-      renderQuestion();
+      renderLandingScreen();
     });
   }
 
   if (langEsBtn) {
     langEsBtn.addEventListener("click", () => {
       APP_STATE.locale = "es";
+      renderLandingScreen();
+    });
+  }
+
+  if (startExploringBtn) {
+    startExploringBtn.addEventListener("click", () => {
+      APP_STATE.hasStarted = true;
+      APP_STATE.currentStep = 0;
       renderQuestion();
     });
   }
 
-  renderQuestion();
+  renderLandingScreen();
 });
 
 function getVisibleQuestionKeys(answers) {

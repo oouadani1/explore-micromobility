@@ -77,12 +77,25 @@ h1 {
   flex: 1;
 }
 
+.landing-view {
+  display: flex;
+  flex-direction: column;
+}
+
 .intro {
   margin-bottom: 20px;
   color: #000000;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.45;
+}
+
+.landing-actions {
+  margin-top: 6px;
+}
+
+.landing-start-btn {
+  min-width: 220px;
 }
 
 .landing-controls {

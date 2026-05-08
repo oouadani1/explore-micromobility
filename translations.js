@@ -53,6 +53,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
       previousRecommendation: "Recomendación anterior",
       nextRecommendation: "Siguiente recomendación",
       previousQuestion: "Pregunta anterior",
+      backToStart: "Volver al inicio",
       nextQuestion: "Siguiente pregunta",
       noRecommendations: "No hay recomendaciones disponibles.",
       agePlaceholder: "Escribe la edad",
