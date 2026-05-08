@@ -40,20 +40,14 @@ const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
-    introParagraphs: [
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more.",
-      "The tool shows one question at a time. Most people answer 7 to 9 questions. Selecting an answer opens the next question. If the tool asks for age, enter a whole number, then select Next. The last question opens your results.",
-      "The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs."
-    ]
+    introText:
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. The tool shows one question at a time. Most people answer 7 to 9 questions. Selecting an answer opens the next question. If the tool asks for age, enter a whole number, then select Next. The last question opens your results. The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs."
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
-    introParagraphs: [
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más.",
-      "La herramienta muestra una pregunta a la vez. La mayoría de las personas responde entre 7 y 9 preguntas. Al seleccionar una respuesta, se abre la siguiente pregunta. Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente. La última pregunta abre tus resultados.",
-      "La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades."
-    ]
+    introText:
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. La herramienta muestra una pregunta a la vez. La mayoría de las personas responde entre 7 y 9 preguntas. Al seleccionar una respuesta, se abre la siguiente pregunta. Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente. La última pregunta abre tus resultados. La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades."
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
@@ -3747,9 +3741,7 @@ function renderLandingCopy() {
   }
 
   if (intro) {
-    intro.innerHTML = (copy.introParagraphs || [])
-      .map((item) => `<p>${item}</p>`)
-      .join("");
+    intro.textContent = copy.introText;
   }
 
   if (startExploringBtn) {

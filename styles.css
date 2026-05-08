@@ -90,14 +90,6 @@ h1 {
   line-height: 1.6;
 }
 
-.intro p {
-  margin: 0 0 14px;
-}
-
-.intro p:last-child {
-  margin-bottom: 0;
-}
-
 .landing-actions {
   display: flex;
   justify-content: center;
@@ -105,10 +97,25 @@ h1 {
 }
 
 .landing-start-btn {
-  min-width: 280px;
-  min-height: 56px;
-  padding: 16px 30px;
-  font-size: 18px;
+  min-width: 360px;
+  min-height: 78px;
+  padding: 20px 32px;
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  background: var(--surface-white);
+  box-shadow: 0 8px 18px rgba(24, 59, 91, 0.05);
+  color: var(--text-blue-aa);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.landing-start-btn:hover,
+.landing-start-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+  border-color: rgba(20, 85, 143, 0.45);
+  background: rgba(255, 255, 255, 0.92);
+  opacity: 1;
 }
 
 .landing-controls {
@@ -1540,10 +1547,6 @@ body.results-view-active .card {
   line-height: 1.65;
 }
 
-.landing-helper {
-  margin-top: 4px;
-}
-
 body.question-flow-active #introText:not(.hidden) {
   margin-bottom: 14px;
 }
@@ -1904,8 +1907,8 @@ body.results-view-active #result {
   .landing-start-btn {
     width: 100%;
     min-width: 0;
-    min-height: 54px;
-    font-size: 17px;
+    min-height: 68px;
+    font-size: 20px;
   }
 
   body.question-flow-active #introText:not(.hidden) {
