@@ -58,8 +58,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
       agePlaceholder: "Escribe la edad",
       selectAnswerError: "Selecciona una respuesta antes de continuar.",
       enterAgeError: "Escribe una edad antes de continuar.",
-      enterAgeLeadingZerosError: "Escribe una edad con un número entero, sin ceros al principio.",
-      enterWholeAgeError: "Escribe una edad con un número entero, sin decimales.",
+      enterWholeAgeFormatError: "Escribe una edad con un número entero, sin decimales, letras ni ceros al principio.",
       enterAgeBetweenPrefix: "Escribe una edad entre",
       enterAgeBetweenJoin: "y",
       countOf: "de",
@@ -133,7 +132,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
   questions: {
     es: {
       pathway: {
-        label: "¿Para quién es la compra?",
+        label: "¿Para quién es esto?",
         options: {
           myself: "Para mí",
           someoneElse: "Otra persona",

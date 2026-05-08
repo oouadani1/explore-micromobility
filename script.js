@@ -1107,7 +1107,7 @@ function getNextSteps(recId) {
 const QUESTIONS = {
   pathway: {
     type: "radio",
-    label: "Who are you purchasing for?",
+    label: "Who is this for?",
     options: [
       { value: "myself", label: "Myself" },
       { value: "someoneElse", label: "Someone else" },
@@ -4013,7 +4013,6 @@ function saveCurrentStepValue() {
     const input = document.getElementById(questionId);
     const rawValue = input?.value?.trim() || "";
     const age = Number(rawValue);
-    const leadingZerosPattern = /^0\d+$/;
     const digitsOnlyPattern = /^\d+$/;
 
     if (rawValue === "") {
@@ -4023,21 +4022,12 @@ function saveCurrentStepValue() {
       };
     }
 
-    if (leadingZerosPattern.test(rawValue)) {
+    if (/^0\d+$/.test(rawValue) || !digitsOnlyPattern.test(rawValue) || !Number.isInteger(age)) {
       return {
         valid: false,
         message: isSpanishLocale()
-          ? getUiText("enterAgeLeadingZerosError")
-          : "Please enter a whole number age without zeros in the beginning."
-      };
-    }
-
-    if (!digitsOnlyPattern.test(rawValue) || !Number.isInteger(age)) {
-      return {
-        valid: false,
-        message: isSpanishLocale()
-          ? getUiText("enterWholeAgeError")
-          : "Please enter a whole number age without decimals."
+          ? getUiText("enterWholeAgeFormatError")
+          : "Please enter a whole age number without any decimals, letters, or leading zeros."
       };
     }
 
