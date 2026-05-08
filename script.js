@@ -40,33 +40,19 @@ const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
-    introText:
-      "Explore Micromobility is a public information tool that helps you find micromobility options that may work for you.",
-    helperTitle: "How this tool works",
-    helperLead:
-      "The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs.",
-    helperItems: [
-      "The tool asks one question at a time.",
-      "Most people answer 7 to 9 questions.",
-      "Selecting an answer opens the next question.",
-      "If the tool asks for age, type a whole number and select Next.",
-      "The last question opens your results."
+    introParagraphs: [
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more.",
+      "The tool shows one question at a time. Most people answer 7 to 9 questions. Selecting an answer opens the next question. If the tool asks for age, enter a whole number, then select Next. The last question opens your results.",
+      "The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs."
     ]
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
-    introText:
-      "Explore Micromobility es una herramienta pública de información que te ayuda a encontrar opciones de micromovilidad que podrían funcionar para ti.",
-    helperTitle: "Cómo funciona esta herramienta",
-    helperLead:
-      "La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades.",
-    helperItems: [
-      "La herramienta hace una pregunta a la vez.",
-      "La mayoría de las personas responde entre 7 y 9 preguntas.",
-      "Al seleccionar una respuesta, se abre la siguiente pregunta.",
-      "Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente.",
-      "La última pregunta abre tus resultados."
+    introParagraphs: [
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más.",
+      "La herramienta muestra una pregunta a la vez. La mayoría de las personas responde entre 7 y 9 preguntas. Al seleccionar una respuesta, se abre la siguiente pregunta. Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente. La última pregunta abre tus resultados.",
+      "La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades."
     ]
   }
 };
@@ -3748,9 +3734,6 @@ function renderLandingCopy() {
   const intro = document.getElementById("introText");
   const heroTitle = document.getElementById("heroTitle");
   const startExploringBtn = document.getElementById("startExploringBtn");
-  const landingHelperTitle = document.getElementById("landingHelperTitle");
-  const landingHelperLead = document.getElementById("landingHelperLead");
-  const landingHelperList = document.getElementById("landingHelperList");
   const progress = document.getElementById("progress");
   const copy = getLandingLocaleCopy();
   const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
@@ -3764,20 +3747,8 @@ function renderLandingCopy() {
   }
 
   if (intro) {
-    intro.textContent = copy.introText;
-  }
-
-  if (landingHelperTitle) {
-    landingHelperTitle.textContent = copy.helperTitle;
-  }
-
-  if (landingHelperLead) {
-    landingHelperLead.textContent = copy.helperLead;
-  }
-
-  if (landingHelperList) {
-    landingHelperList.innerHTML = (copy.helperItems || [])
-      .map((item) => `<li>${item}</li>`)
+    intro.innerHTML = (copy.introParagraphs || [])
+      .map((item) => `<p>${item}</p>`)
       .join("");
   }
 
