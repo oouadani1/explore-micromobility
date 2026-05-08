@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="documentTitle">Explore Micromobility</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
 </head>
 <body>
   <main class="container">
@@ -30,17 +30,17 @@
       </section>
 
 
-      <div id="progress" class="recommendation-disclaimer"></div>
-      <div id="stepErrorLive" class="visually-hidden" role="alert" aria-atomic="true"></div>
+      <div id="progress" class="recommendation-disclaimer" aria-hidden="true"></div>
+      <div id="stepErrorLive" class="visually-hidden" aria-live="assertive" aria-atomic="true" aria-hidden="true"></div>
 
-      <div id="formStep"></div>
+      <div id="formStep" class="hidden" aria-hidden="true"></div>
 
       <div id="formNav" class="footer-branding form-nav hidden">
         <button id="backBtn" type="button" class="hidden" aria-label="Previous question">&#8249;</button>
         <button id="nextBtn" type="button" class="hidden" aria-label="Next question">&#8250;</button>
       </div>
 
-      <div id="result" class="result hidden"></div>
+      <div id="result" class="result hidden" aria-hidden="true"></div>
 
       <section id="questionAuditStatic" class="question-audit hidden">
         <h1 class="question-audit-title">Question audit</h1>

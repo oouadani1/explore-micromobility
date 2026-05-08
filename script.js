@@ -1362,20 +1362,30 @@ function getQuestionProgressText(questionId) {
     return `${questionLabel} ${currentNumber} ${ofLabel} ${max}`;
   }
 
-  const totalRange = isSpanishLocale() ? `${min} a ${max}` : `${min}-${max}`;
-  return `${questionLabel} ${currentNumber} ${ofLabel} ${totalRange}`;
+  return `${questionLabel} ${currentNumber}`;
 }
 
 function setQuestionContext(questionId) {
   const progress = document.getElementById("progress");
   const currentContent = getRenderedQuestionLabel(questionId);
   const progressText = getQuestionProgressText(questionId);
+  const currentNumber = findQuestionIndex(questionId) + 1;
+  const { min, max } = getPossibleQuestionTotals(APP_STATE.answers);
   const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
 
   document.title = `${appTitle} - ${progressText} - ${currentContent}`;
 
   if (progress) {
     progress.textContent = progressText;
+    progress.removeAttribute("aria-hidden");
+    progress.setAttribute(
+      "aria-label",
+      min === max
+        ? progressText
+        : isSpanishLocale()
+          ? `Pregunta ${currentNumber} de hasta ${max}`
+          : `Question ${currentNumber} of up to ${max}`
+    );
   }
 }
 
@@ -1390,6 +1400,8 @@ function setResultsContext(recLabel = "") {
 
   if (progress) {
     progress.textContent = resultsLabel;
+    progress.removeAttribute("aria-hidden");
+    progress.setAttribute("aria-label", resultsLabel);
   }
 }
 
@@ -3312,7 +3324,11 @@ function renderRecommendations(recommendations, allRecommendations, answers, sco
 
   if (!result) return;
 
-  if (formStep) formStep.innerHTML = "";
+  if (formStep) {
+    formStep.innerHTML = "";
+    formStep.classList.add("hidden");
+    formStep.setAttribute("aria-hidden", "true");
+  }
   if (formNav) formNav.classList.add("hidden");
   if (backBtn) backBtn.classList.add("hidden");
   if (nextBtn) nextBtn.classList.add("hidden");
@@ -3320,6 +3336,7 @@ function renderRecommendations(recommendations, allRecommendations, answers, sco
   if (!recommendations.length) {
     setResultsContext();
     result.classList.remove("hidden");
+    result.removeAttribute("aria-hidden");
     result.innerHTML = `<strong>${isSpanishLocale() ? getUiText("noRecommendations") : "No recommendations available."}</strong>`;
     return;
   }
@@ -3368,6 +3385,7 @@ function renderCurrentRecommendationPage() {
   setResultsContext(rec.label);
 
   result.classList.remove("hidden");
+  result.removeAttribute("aria-hidden");
   result.removeAttribute("role");
   result.removeAttribute("aria-labelledby");
   result.removeAttribute("aria-describedby");
@@ -3578,6 +3596,7 @@ function announceStepError(message) {
   if (!liveRegionEl) return;
 
   liveRegionEl.textContent = "";
+  liveRegionEl.setAttribute("aria-hidden", "false");
 
   window.setTimeout(() => {
     if (document.getElementById("stepErrorLive") === liveRegionEl) {
@@ -3750,6 +3769,8 @@ function renderLandingCopy() {
 
   if (progress) {
     progress.textContent = "";
+    progress.setAttribute("aria-hidden", "true");
+    progress.removeAttribute("aria-label");
   }
 
   renderFooterDisclaimer();
@@ -3774,11 +3795,14 @@ function renderLandingScreen({ focusStartButton = false } = {}) {
 
   if (formStep) {
     formStep.innerHTML = "";
+    formStep.classList.add("hidden");
+    formStep.setAttribute("aria-hidden", "true");
   }
 
   if (result) {
     result.classList.add("hidden");
     result.innerHTML = "";
+    result.setAttribute("aria-hidden", "true");
   }
 
   if (formNav) {
@@ -3816,8 +3840,11 @@ function renderQuestion() {
   setLandingHeaderVisibility(false);
   setFooterDisclaimerVisibility(false);
 
+  formStep.classList.remove("hidden");
+  formStep.removeAttribute("aria-hidden");
   result.classList.add("hidden");
   result.innerHTML = "";
+  result.setAttribute("aria-hidden", "true");
 
   const questionId = getCurrentQuestionId();
   const question = getLocalizedQuestion(questionId);
@@ -4005,6 +4032,7 @@ function clearStepError() {
   const liveRegionEl = document.getElementById("stepErrorLive");
   if (liveRegionEl) {
     liveRegionEl.textContent = "";
+    liveRegionEl.setAttribute("aria-hidden", "true");
   }
 
   const questionId = getCurrentQuestionId();

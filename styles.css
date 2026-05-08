@@ -5,7 +5,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Poppins", Arial, sans-serif;
+  font-family: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background:
     radial-gradient(circle at top, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 34%),
     linear-gradient(180deg, #dbeaf7 0%, #c9def0 45%, #b9d2e7 100%);
@@ -14,6 +14,8 @@ body {
 }
 
 :root {
+  --font-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: "Poppins", "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --text-blue-aa: #14558F;
   --text-green-aa: #1e853f;
   --button-green-aa: #14558F;
@@ -58,10 +60,24 @@ body {
 }
 
 h1 {
+  font-family: var(--font-heading);
   margin-top: 0;
   margin-bottom: 12px;
   color: var(--text-blue-aa);
   font-size: 28px;
+}
+
+h2,
+h3,
+h4,
+.question-label,
+.results-intro-heading,
+.recommendation-title,
+.guidance-heading,
+.results-methodology__title,
+.results-methodology__section-title,
+.details-toggle-btn {
+  font-family: var(--font-heading);
 }
 
 .landing-header {
@@ -202,7 +218,7 @@ button {
   border-radius: 8px;
   background: var(--button-green-aa);
   color: white;
-  font-family: inherit;
+  font-family: var(--font-body);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
