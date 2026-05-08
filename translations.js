@@ -19,7 +19,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
       seeAllDeviceTypes: "Otras opciones de micromovilidad para ti",
       howResultsAreShown: "Por qué elegimos estas opciones",
       howExplorerWorks: "Cómo funciona el Explorador de micromovilidad",
-      resultsOverviewText: "Esta herramienta da más o menos puntos a distintos tipos de dispositivos según tus respuestas. Después, algunas comprobaciones adicionales ayudan a decidir qué opciones aparecen en los resultados.",
+      resultsOverviewText: "Estos resultados usan tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar las opciones que mejor se ajustan a lo que indicaste.",
       resultsReportText: "La herramienta se basa en el informe de la Special Commission on Micromobility presentado el 31 de enero de 2026, junto con la ley vigente en Massachusetts y otra información actual de los programas cuando corresponde.",
       currentVisibilityRules: "Por qué algunas opciones pueden no aparecer",
       whatAffectsScoring: "Tus respuestas",

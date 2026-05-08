@@ -41,13 +41,33 @@ const LANDING_PAGE_COPY = {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
     introText:
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more. This tool shows one question on each screen. Most paths take 7 to 9 questions to find micromobility devices that might work for you. Selecting an answer opens the next question. For the age question, enter an age and use Next. The last answer opens your results."
+      "Explore Micromobility is a public information tool that helps you find micromobility options that may work for you.",
+    helperTitle: "How this tool works",
+    helperLead:
+      "The tool uses your answers, current Massachusetts rules, and current program information to show options that may fit your needs.",
+    helperItems: [
+      "The tool asks one question at a time.",
+      "Most people answer 7 to 9 questions.",
+      "Selecting an answer opens the next question.",
+      "If the tool asks for age, type a whole number and select Next.",
+      "The last question opens your results."
+    ]
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
     introText:
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más. Esta herramienta muestra una pregunta en cada pantalla. La mayoría de los recorridos toman de 7 a 9 preguntas para encontrar dispositivos de micromovilidad que podrían funcionar para ti. Al seleccionar una respuesta, se abre la siguiente pregunta. En la pregunta sobre la edad, escribe una edad y usa Siguiente. La última respuesta abre tus resultados."
+      "Explore Micromobility es una herramienta pública de información que te ayuda a encontrar opciones de micromovilidad que podrían funcionar para ti.",
+    helperTitle: "Cómo funciona esta herramienta",
+    helperLead:
+      "La herramienta usa tus respuestas, las reglas actuales de Massachusetts y la información vigente de los programas para mostrar opciones que podrían ajustarse a tus necesidades.",
+    helperItems: [
+      "La herramienta hace una pregunta a la vez.",
+      "La mayoría de las personas responde entre 7 y 9 preguntas.",
+      "Al seleccionar una respuesta, se abre la siguiente pregunta.",
+      "Si la herramienta pregunta la edad, escribe un número entero y luego selecciona Siguiente.",
+      "La última pregunta abre tus resultados."
+    ]
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
@@ -57,9 +77,7 @@ const SCORING_DISCLAIMER_TEXT =
 const RESULTS_METHODS_SUMMARY_TEXT = "Why we chose these options";
 const RESULTS_METHODS_TITLE_TEXT = "How the Micromobility Explorer works";
 const RESULTS_METHODS_OVERVIEW_TEXT =
-  "This tool gives different device types more or fewer points based on your answers. After that, a few extra checks help decide which options show up in the results.";
-const RESULTS_METHODS_REPORT_TEXT =
-  "The explorer is informed by the Special Commission on Micromobility report filed on January 31, 2026 and by current Massachusetts law and current program information where relevant.";
+  "These results use your answers, current Massachusetts rules, and current program information to show the options that best fit what you entered.";
 const RESULTS_METHODS_VISIBILITY_TITLE_TEXT = "Why some options may not show up";
 const RESULTS_METHODS_SCORING_TITLE_TEXT = "Your responses";
 const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What helped show these options";
@@ -2519,7 +2537,6 @@ function renderResultsMethodology(answers) {
       >
         <h3 class="results-methodology__title">${isSpanishLocale() ? getUiText("howExplorerWorks") : RESULTS_METHODS_TITLE_TEXT}</h3>
         <p>${isSpanishLocale() ? getUiText("resultsOverviewText") : RESULTS_METHODS_OVERVIEW_TEXT}</p>
-        <p>${isSpanishLocale() ? getUiText("resultsReportText") : RESULTS_METHODS_REPORT_TEXT}</p>
 
         <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("currentVisibilityRules") : RESULTS_METHODS_VISIBILITY_TITLE_TEXT}</h3>
         <ul class="results-methodology__list">${visibilityLawNotesHtml}</ul>
@@ -3731,6 +3748,9 @@ function renderLandingCopy() {
   const intro = document.getElementById("introText");
   const heroTitle = document.getElementById("heroTitle");
   const startExploringBtn = document.getElementById("startExploringBtn");
+  const landingHelperTitle = document.getElementById("landingHelperTitle");
+  const landingHelperLead = document.getElementById("landingHelperLead");
+  const landingHelperList = document.getElementById("landingHelperList");
   const progress = document.getElementById("progress");
   const copy = getLandingLocaleCopy();
   const appTitle = isSpanishLocale() ? getUiText("title") : APP_NAME;
@@ -3745,6 +3765,20 @@ function renderLandingCopy() {
 
   if (intro) {
     intro.textContent = copy.introText;
+  }
+
+  if (landingHelperTitle) {
+    landingHelperTitle.textContent = copy.helperTitle;
+  }
+
+  if (landingHelperLead) {
+    landingHelperLead.textContent = copy.helperLead;
+  }
+
+  if (landingHelperList) {
+    landingHelperList.innerHTML = (copy.helperItems || [])
+      .map((item) => `<li>${item}</li>`)
+      .join("");
   }
 
   if (startExploringBtn) {
