@@ -54,11 +54,12 @@ const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility
 const EXPLORING_RESULTS_TITLE_TEXT = "Explore micromobility options.";
 const SCORING_DISCLAIMER_TEXT =
   "Explore Micromobility is an informational resource. It does not provide legal, safety, financial, or purchasing advice, and it does not endorse specific products, brands, sellers, or services. Review current laws, local rules, and product details before riding, renting, or purchasing.";
-const RESULTS_METHODS_SUMMARY_TEXT = "Why these options were shown";
-const RESULTS_METHODS_VISIBILITY_TITLE_TEXT = "Why some options may not show up";
+const RESULTS_METHODS_SUMMARY_TEXT = "How this tool shows options";
+const RESULTS_METHODS_INTRO_TEXT = "This section explains how the tool adds points, shows your responses, and notes why some options may appear lower or not appear.";
 const RESULTS_METHODS_SCORING_TITLE_TEXT = "Your responses";
-const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What helped show these options";
-const RESULTS_METHODS_LIMITING_TITLE_TEXT = "What may have lowered other options";
+const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What added points for these options";
+const RESULTS_METHODS_LIMITING_TITLE_TEXT = "Why some options may appear lower or not appear";
+const RESULTS_METHODS_REFERENCES_TITLE_TEXT = "Rules and references used in this tool";
 const RESULTS_METHODS_REPORT_LINK_TEXT = "Read the Special Commission report";
 const RESULTS_METHODS_BICYCLE_LAW_LINK_TEXT = "Massachusetts law about bicycles";
 const RESULTS_REASON_HEADING_TEXT = "Why this option may be a good fit";
@@ -2492,7 +2493,7 @@ function renderResultsMethodology(answers) {
   }
 
   const scoringFactors = getMethodologyScoringFactors(answers);
-  const currentResponseRules = getCurrentResponsePositiveDrivers(answers);
+  const positiveDrivers = getCurrentResponsePositiveDrivers(answers);
   const limitingNotes = getCurrentResponseLimitingNotes(answers);
   const visibilityLawNotes = getResultsVisibilityLawNotes();
   const scoringFactorsHtml = scoringFactors
@@ -2501,14 +2502,11 @@ function renderResultsMethodology(answers) {
   const visibilityLawNotesHtml = visibilityLawNotes
     .map((item) => `<li>${item}</li>`)
     .join("");
-  const currentResponseRulesHtml = currentResponseRules.length
-    ? currentResponseRules.map((item) => `<li>${item}</li>`).join("")
+  const positiveDriversHtml = positiveDrivers.length
+    ? positiveDrivers.map((item) => `<li>${item}</li>`).join("")
     : `<li>${isSpanishLocale() ? getUiText("noAdditionalVisibilityRules") : "No additional notes changed what showed up for this response."}</li>`;
-  const limitingNotesHtml = limitingNotes.length
-    ? `
-        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatMayLowerOptions") : RESULTS_METHODS_LIMITING_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list">${limitingNotes.map((item) => `<li>${item}</li>`).join("")}</ul>
-      `
+  const limitingAndVisibilityHtml = [...limitingNotes, ...visibilityLawNotes].length
+    ? [...limitingNotes, ...visibilityLawNotes].map((item) => `<li>${item}</li>`).join("")
     : "";
 
   return `
@@ -2528,15 +2526,18 @@ function renderResultsMethodology(answers) {
         ${APP_STATE.resultsMethodologyOpen ? "" : "hidden"}
         data-accordion-panel
       >
-        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("currentVisibilityRules") : RESULTS_METHODS_VISIBILITY_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list">${visibilityLawNotesHtml}</ul>
+        <p class="results-methodology__intro">${isSpanishLocale() ? getUiText("resultsMethodologyIntro") : RESULTS_METHODS_INTRO_TEXT}</p>
 
         <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatAffectsScoring") : RESULTS_METHODS_SCORING_TITLE_TEXT}</h3>
         <ul class="results-methodology__list">${scoringFactorsHtml}</ul>
 
         <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatHelpedShowResults") : RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT}</h3>
-        <ul class="results-methodology__list">${currentResponseRulesHtml}</ul>
-        ${limitingNotesHtml}
+        <ul class="results-methodology__list">${positiveDriversHtml}</ul>
+
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("whatMayLowerOptions") : RESULTS_METHODS_LIMITING_TITLE_TEXT}</h3>
+        <ul class="results-methodology__list">${limitingAndVisibilityHtml}</ul>
+
+        <h3 class="results-methodology__section-title">${isSpanishLocale() ? getUiText("methodologyReferences") : RESULTS_METHODS_REFERENCES_TITLE_TEXT}</h3>
 
         <p class="results-methodology__links">
           <a href="${REPORT_URL}" target="_blank" rel="noopener noreferrer">${isSpanishLocale() ? getUiText("readCommissionReport") : RESULTS_METHODS_REPORT_LINK_TEXT}</a>
