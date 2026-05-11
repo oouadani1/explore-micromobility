@@ -1399,7 +1399,7 @@ function getQuestionNextButtonLabel(questionId) {
   const nextQuestionId = getAdjacentQuestionId(questionId, 1);
 
   if (!nextQuestionId) {
-    return isSpanishLocale() ? getUiText("reviewResults") : "Review results";
+    return isSpanishLocale() ? getUiText("reviewResults") : "Explore results";
   }
 
   return isSpanishLocale() ? getUiText("nextQuestion") : "Next question";
@@ -3973,7 +3973,7 @@ function renderQuestion() {
   const isLastQuestion = !getAdjacentQuestionId(questionId, 1);
   nextBtn.classList.toggle("form-nav-action-btn", isLastQuestion);
   nextBtn.innerHTML = isLastQuestion
-    ? (isSpanishLocale() ? getUiText("reviewResults") : "Review results")
+    ? (isSpanishLocale() ? getUiText("reviewResults") : "Explore results")
     : "&#8250;";
   backBtn.setAttribute(
     "aria-label",

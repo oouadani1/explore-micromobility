@@ -57,7 +57,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
       backToQuestions: "Volver a las preguntas",
       goBack: "Volver",
       nextQuestion: "Siguiente pregunta",
-      reviewResults: "Revisar resultados",
+      reviewResults: "Explorar resultados",
       lastQuestion: "Última pregunta",
       noRecommendations: "No hay recomendaciones disponibles.",
       agePlaceholder: "Escribe la edad",
