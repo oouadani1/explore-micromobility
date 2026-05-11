@@ -55,6 +55,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
       previousQuestion: "Pregunta anterior",
       backToStart: "Volver al inicio",
       backToQuestions: "Volver a las preguntas",
+      goBack: "Volver",
       nextQuestion: "Siguiente pregunta",
       reviewResults: "Revisar resultados",
       lastQuestion: "Última pregunta",

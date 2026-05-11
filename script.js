@@ -1405,6 +1405,17 @@ function getQuestionNextButtonLabel(questionId) {
   return isSpanishLocale() ? getUiText("nextQuestion") : "Next question";
 }
 
+function returnToQuestionsFromResults() {
+  if (APP_STATE.answers.pathway === "exploring") {
+    APP_STATE.currentStep = 0;
+    APP_STATE.answers = {};
+    renderQuestion();
+    return;
+  }
+
+  renderQuestion();
+}
+
 function renderLocaleChrome() {
   const documentTitle = document.getElementById("documentTitle");
   const languageToggle = document.getElementById("languageToggle");
@@ -3406,6 +3417,17 @@ function renderCurrentRecommendationPage() {
     ${allResultsPanelHtml}
 
     <div class="results-toolbar">
+      <div class="results-toolbar-start">
+        <button
+          type="button"
+          class="results-back-btn results-back-btn-desktop"
+          data-role="back-to-questions"
+          aria-label="${isSpanishLocale() ? getUiText("goBack") : "Go back"}"
+        >
+          ${isSpanishLocale() ? getUiText("goBack") : "Go back"}
+        </button>
+      </div>
+
       <div class="results-pager">
         <button
           id="resultPrevBtn"
@@ -3426,32 +3448,25 @@ function renderCurrentRecommendationPage() {
         </button>
       </div>
 
-      <button
-        type="button"
-        class="results-back-btn results-back-btn-desktop"
-        data-role="back-to-questions"
-        aria-label="${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}"
-      >
-        ${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}
-      </button>
+      <div class="results-toolbar-end">
+        <button
+          type="button"
+          class="results-restart-btn results-restart-btn-desktop"
+          data-role="restart-results"
+          aria-label="${isSpanishLocale() ? getUiText("startOver") : "Start over"}"
+        >
+          ${isSpanishLocale() ? getUiText("startOver") : "Start over"}
+        </button>
 
-      <button
-        type="button"
-        class="results-restart-btn results-restart-btn-desktop"
-        data-role="restart-results"
-        aria-label="${isSpanishLocale() ? getUiText("startOver") : "Start over"}"
-      >
-        ${isSpanishLocale() ? getUiText("startOver") : "Start over"}
-      </button>
-
-      <button
-        type="button"
-        class="results-print-btn results-print-btn-desktop"
-        data-role="print-results"
-        aria-label="${isSpanishLocale() ? getUiText("printResults") : "Print results"}"
-      >
-        ${PRINT_ICON_SVG}
-      </button>
+        <button
+          type="button"
+          class="results-print-btn results-print-btn-desktop"
+          data-role="print-results"
+          aria-label="${isSpanishLocale() ? getUiText("printResults") : "Print results"}"
+        >
+          ${PRINT_ICON_SVG}
+        </button>
+      </div>
     </div>
 
     <div class="results-actions-mobile">
@@ -3459,9 +3474,9 @@ function renderCurrentRecommendationPage() {
         type="button"
         class="results-back-btn results-back-btn-mobile"
         data-role="back-to-questions"
-        aria-label="${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}"
+        aria-label="${isSpanishLocale() ? getUiText("goBack") : "Go back"}"
       >
-        ${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}
+        ${isSpanishLocale() ? getUiText("goBack") : "Go back"}
       </button>
 
       <button
@@ -3531,14 +3546,14 @@ function renderCurrentRecommendationPage() {
 
   backToQuestionsBtns.forEach((backToQuestionsBtn) => {
     backToQuestionsBtn.addEventListener("click", () => {
-      renderQuestion();
+      returnToQuestionsFromResults();
     });
   });
 
   restartBtns.forEach((restartBtn) => {
     restartBtn.addEventListener("click", () => {
       resetAppState();
-      renderQuestion();
+      renderLandingScreen({ focusStartButton: true });
     });
   });
 
