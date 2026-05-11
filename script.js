@@ -54,7 +54,7 @@ const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility
 const EXPLORING_RESULTS_TITLE_TEXT = "Explore micromobility options.";
 const SCORING_DISCLAIMER_TEXT =
   "Explore Micromobility is an informational resource. It does not provide legal, safety, financial, or purchasing advice, and it does not endorse specific products, brands, sellers, or services. Review current laws, local rules, and product details before riding, renting, or purchasing.";
-const RESULTS_METHODS_SUMMARY_TEXT = "How this tool shows options";
+const RESULTS_METHODS_SUMMARY_TEXT = "How Explore Micromobility shows options";
 const RESULTS_METHODS_INTRO_TEXT = "This section explains how the tool adds points, shows your responses, and notes why some options may appear lower or not appear.";
 const RESULTS_METHODS_SCORING_TITLE_TEXT = "Your responses";
 const RESULTS_METHODS_CURRENT_RESPONSE_TITLE_TEXT = "What added points for these options";
@@ -2483,7 +2483,7 @@ function getResultsVisibilityLawNotes() {
   return [
     "Current Massachusetts law requires helmets for bicycle riders age 16 and under, and for manually propelled scooters age 16 and under.",
     "Some shared systems have their own service requirements. For example, Bluebikes currently requires riders to be 16 or older.",
-    "Some options are shown more cautiously in this tool to reflect the report's safety-focused approach, even when existing state law does not use the exact same categories."
+    "Some options are shown more cautiously in this tool to follow the safety-focused rules used here, even when current state law does not use the exact same categories."
   ];
 }
 
@@ -2497,9 +2497,6 @@ function renderResultsMethodology(answers) {
   const limitingNotes = getCurrentResponseLimitingNotes(answers);
   const visibilityLawNotes = getResultsVisibilityLawNotes();
   const scoringFactorsHtml = scoringFactors
-    .map((item) => `<li>${item}</li>`)
-    .join("");
-  const visibilityLawNotesHtml = visibilityLawNotes
     .map((item) => `<li>${item}</li>`)
     .join("");
   const positiveDriversHtml = positiveDrivers.length
