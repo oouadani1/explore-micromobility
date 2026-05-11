@@ -1399,7 +1399,7 @@ function getQuestionNextButtonLabel(questionId) {
   const nextQuestionId = getAdjacentQuestionId(questionId, 1);
 
   if (!nextQuestionId) {
-    return isSpanishLocale() ? "Resultados" : "Results";
+    return isSpanishLocale() ? getUiText("reviewResults") : "Review results";
   }
 
   return isSpanishLocale() ? getUiText("nextQuestion") : "Next question";
@@ -3428,6 +3428,15 @@ function renderCurrentRecommendationPage() {
 
       <button
         type="button"
+        class="results-back-btn results-back-btn-desktop"
+        data-role="back-to-questions"
+        aria-label="${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}"
+      >
+        ${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}
+      </button>
+
+      <button
+        type="button"
         class="results-restart-btn results-restart-btn-desktop"
         data-role="restart-results"
         aria-label="${isSpanishLocale() ? getUiText("startOver") : "Start over"}"
@@ -3446,6 +3455,15 @@ function renderCurrentRecommendationPage() {
     </div>
 
     <div class="results-actions-mobile">
+      <button
+        type="button"
+        class="results-back-btn results-back-btn-mobile"
+        data-role="back-to-questions"
+        aria-label="${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}"
+      >
+        ${isSpanishLocale() ? getUiText("backToQuestions") : "Back to questions"}
+      </button>
+
       <button
         type="button"
         class="results-restart-btn results-restart-btn-mobile"
@@ -3470,6 +3488,7 @@ function renderCurrentRecommendationPage() {
 
   const prevBtn = document.getElementById("resultPrevBtn");
   const nextBtn = document.getElementById("resultNextBtn");
+  const backToQuestionsBtns = document.querySelectorAll('[data-role="back-to-questions"]');
   const restartBtns = document.querySelectorAll('[data-role="restart-results"]');
   const printBtns = document.querySelectorAll('[data-role="print-results"]');
   renderFooterDisclaimer();
@@ -3509,6 +3528,12 @@ function renderCurrentRecommendationPage() {
       }
     });
   }
+
+  backToQuestionsBtns.forEach((backToQuestionsBtn) => {
+    backToQuestionsBtn.addEventListener("click", () => {
+      renderQuestion();
+    });
+  });
 
   restartBtns.forEach((restartBtn) => {
     restartBtn.addEventListener("click", () => {
@@ -3629,25 +3654,6 @@ function submitCurrentAnswers() {
     scores,
     normalizedAnswers.pathway
   );
-}
-
-function advanceFromCurrentRadioQuestion(selectedValue) {
-  clearStepError();
-
-  const questionId = getCurrentQuestionId();
-  APP_STATE.answers[questionId] = selectedValue;
-
-  setTimeout(() => {
-    const nextQuestionId = getAdjacentQuestionId(questionId, 1);
-
-    if (nextQuestionId) {
-      setCurrentStepToQuestion(nextQuestionId);
-      renderQuestion();
-      return;
-    }
-
-    submitCurrentAnswers();
-  }, 120);
 }
 
 function getRenderedQuestionLabel(questionId) {
@@ -3856,17 +3862,19 @@ function renderQuestion() {
   const question = getLocalizedQuestion(questionId);
   const renderedOptions = getRenderedQuestionOptions(questionId);
   const renderedLabel = getRenderedQuestionLabel(questionId);
+  const progressText = getQuestionProgressText(questionId);
   const savedValue = APP_STATE.answers[questionId] || "";
   setQuestionContext(questionId);
 
   if (question.type === "radio") {
     const usesRouteImages = questionId === "routeType";
     const legendId = `${questionId}-legend`;
+    const progressPrefixHtml = `<span class="visually-hidden">${progressText}. </span>`;
     const describedByIds = ["stepError"].join(" ");
     formStep.innerHTML = `
       <div class="question-block">
         <fieldset class="question-fieldset" ${describedByIds ? `aria-describedby="${describedByIds}"` : ""}>
-          <legend id="${legendId}" class="question-label">${renderedLabel}</legend>
+          <legend id="${legendId}" class="question-label">${progressPrefixHtml}${renderedLabel}</legend>
           <div class="option-grid option-grid-${Math.min(renderedOptions.length, 4)}">
             ${renderedOptions.map((option) => `
               <label class="option-card ${usesRouteImages ? "option-card--with-image" : ""}" for="${questionId}-${option.value}">
@@ -3896,48 +3904,10 @@ function renderQuestion() {
       </div>
     `;
 
-    let pointerSelectionInProgress = false;
-
     const radioInputs = formStep.querySelectorAll(`input[name="${questionId}"]`);
     radioInputs.forEach((input) => {
       input.addEventListener("change", () => {
-        if (pointerSelectionInProgress) {
-          pointerSelectionInProgress = false;
-          advanceFromCurrentRadioQuestion(input.value);
-        }
-      });
-
-      input.addEventListener("keydown", (event) => {
-        if (event.key !== "Enter") {
-          pointerSelectionInProgress = false;
-        }
-
-        if (event.key !== "Enter") return;
-        if (!input.checked) return;
-
-        event.preventDefault();
-        advanceFromCurrentRadioQuestion(input.value);
-      });
-    });
-
-    const optionCards = formStep.querySelectorAll(".option-card");
-    optionCards.forEach((card) => {
-      const input = card.querySelector(`input[name="${questionId}"]`);
-      if (!input) return;
-
-      const markPointerSelection = () => {
-        pointerSelectionInProgress = true;
-      };
-
-      card.addEventListener("pointerdown", markPointerSelection);
-      card.addEventListener("mousedown", markPointerSelection);
-      card.addEventListener("touchstart", markPointerSelection, { passive: true });
-
-      card.addEventListener("click", () => {
-        if (input.checked && APP_STATE.answers[questionId] === input.value) {
-          pointerSelectionInProgress = false;
-          advanceFromCurrentRadioQuestion(input.value);
-        }
+        clearStepError();
       });
     });
 
@@ -3952,7 +3922,7 @@ function renderQuestion() {
  const describedByIds = ["stepError"].join(" ");
   formStep.innerHTML = `
     <div class="question-block">
-      <label for="${questionId}" class="question-label">${renderedLabel}</label>
+      <label for="${questionId}" class="question-label"><span class="visually-hidden">${progressText}. </span>${renderedLabel}</label>
       <input
         id="${questionId}"
         type="text"
@@ -3985,7 +3955,11 @@ function renderQuestion() {
   backBtn.classList.remove("hidden");
   nextBtn.classList.toggle("hidden", question.type !== "number" && question.type !== "radio");
   backBtn.innerHTML = "&#8249;";
-  nextBtn.innerHTML = "&#8250;";
+  const isLastQuestion = !getAdjacentQuestionId(questionId, 1);
+  nextBtn.classList.toggle("form-nav-action-btn", isLastQuestion);
+  nextBtn.innerHTML = isLastQuestion
+    ? (isSpanishLocale() ? getUiText("reviewResults") : "Review results")
+    : "&#8250;";
   backBtn.setAttribute(
     "aria-label",
     APP_STATE.currentStep === 0

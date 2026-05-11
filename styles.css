@@ -760,6 +760,16 @@ body.results-view-active .site-branding {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
+.form-nav button.form-nav-action-btn {
+  width: auto;
+  min-width: 170px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
 .lab-logo {
   height: 65px;
   width: auto;
@@ -782,7 +792,7 @@ body.results-view-active .site-branding {
   gap: 12px;
   padding: 16px 18px;
   border-radius: 16px;
-  border: 1px solid rgba(20, 85, 143, 0.18);
+  border: 1.5px solid rgba(20, 85, 143, 0.28);
   background: rgba(255, 255, 255, 0.75);
   cursor: pointer;
   transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
@@ -791,8 +801,8 @@ body.results-view-active .site-branding {
 .option-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-  border-color: rgba(20, 85, 143, 0.45);
-  background: rgba(255, 255, 255, 0.92);
+  border-color: #14558F;
+  background: rgba(20, 85, 143, 0.12);
 }
 
 .option-card input[type="radio"] {
@@ -1019,7 +1029,7 @@ body.results-view-active .site-branding {
   min-height: 92px;
   padding: 18px 20px;
   border-radius: 22px;
-  border: 1.5px solid rgba(20, 85, 143, 0.22);
+  border: 2px solid rgba(20, 85, 143, 0.32);
   background: rgba(255, 255, 255, 0.72);
   cursor: pointer;
   box-sizing: border-box;
@@ -1033,8 +1043,8 @@ body.results-view-active .site-branding {
 .option-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-  border-color: rgba(20, 85, 143, 0.45);
-  background: rgba(255, 255, 255, 0.9);
+  border-color: #14558F;
+  background: rgba(20, 85, 143, 0.14);
 }
 
 .option-card-input {
@@ -1082,7 +1092,7 @@ body.results-view-active .site-branding {
 
 .option-card:has(.option-card-input:checked) {
   border-color: #14558F;
-  background: rgba(20, 85, 143, 0.10);
+  background: rgba(20, 85, 143, 0.18);
   box-shadow: 0 10px 26px rgba(20, 85, 143, 0.16);
   transform: translateY(-2px);
 }
@@ -1252,6 +1262,7 @@ body.results-view-active .site-branding {
   pointer-events: none;
 }
 
+.results-back-btn,
 .results-restart-btn {
   margin-top: 0;
   margin-left: auto;
@@ -1263,6 +1274,7 @@ body.results-view-active .site-branding {
 @media (forced-colors: active) {
   .form-nav button,
   .results-arrow-btn,
+  .results-back-btn,
   .results-restart-btn {
     forced-color-adjust: auto;
     background: ButtonFace;
@@ -1273,6 +1285,7 @@ body.results-view-active .site-branding {
 
   .form-nav button:hover,
   .results-arrow-btn:hover,
+  .results-back-btn:hover,
   .results-restart-btn:hover {
     transform: none;
   }
@@ -1426,6 +1439,7 @@ body.results-view-active .site-branding {
     flex-basis: 40px;
   }
 
+  .results-back-btn,
   .results-restart-btn {
     width: 100%;
     margin-left: 0;
@@ -1436,13 +1450,17 @@ body.results-view-active .site-branding {
     min-width: 48px;
   }
 
-  .results-restart-btn-desktop {
-    display: none;
-  }
+.results-restart-btn-desktop {
+  display: none;
+}
 
-  .results-print-btn-desktop {
-    display: none;
-  }
+.results-back-btn-desktop {
+  display: none;
+}
+
+.results-print-btn-desktop {
+  display: none;
+}
 
   .results-actions-mobile {
     display: flex;
@@ -1451,9 +1469,17 @@ body.results-view-active .site-branding {
     margin-top: 14px;
   }
 
+  .results-back-btn-mobile,
   .results-restart-btn-mobile {
     width: auto;
     flex: 1;
+  }
+
+  .form-nav button.form-nav-action-btn {
+    min-width: 0;
+    width: auto;
+    padding: 0 18px;
+    font-size: 15px;
   }
 
   .question-label {
@@ -1715,6 +1741,15 @@ body.results-view-active #result {
 }
 
 .results-restart-btn {
+  min-height: 48px;
+  padding: 0 18px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--text-blue-aa);
+  border: 1px solid rgba(20, 85, 143, 0.22);
+  box-shadow: 0 8px 18px rgba(24, 59, 91, 0.06);
+}
+
+.results-back-btn {
   min-height: 48px;
   padding: 0 18px;
   background: rgba(255, 255, 255, 0.96);
