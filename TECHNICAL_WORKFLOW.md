@@ -2,6 +2,24 @@
 
 Explore Micromobility was developed as a lightweight, scalable web app by the Lab @ MassDOT in Spring 2026, per the recommendations made by the Special Commission on Micromobility Report, which was filed with the Legislature in January 2026. The app is written in JavaScript, HTML, and CSS. The purpose of this document is to act as the source of truth for Explore Micromobility's technical components and to facilitate knowledge transfer and future maintenance. It explains what the app is trying to do, how the workflow and scoring work, which conventions should remain stable, and which risks or future changes are most important to understand before making updates. Explore Micromobility has gone through multiple rounds of rigorous testing with internal MassDOT and MBTA stakeholders across various departments and reflects commonly requested features, behaviors, and a high standard of polish and functionality. Further, the tool was audited and refined with MassDOT's Digital Services and Accessibility unit to ensure it meets or exceeds all WCAG 2.2 standards and MassDOT's Design System Guidelines. Documentation prepared by Oussama Ouadani, Lab Innovation Fellow. Code and documentation last updated on May 12, 2026.
 
+## Table of Contents
+
+1. [Goal of the App](#1-goal-of-the-app)
+2. [What This App Is](#2-what-this-app-is)
+3. [How the App Achieves Its Goal](#3-how-the-app-achieves-its-goal)
+4. [Workflow Diagram](#4-workflow-diagram)
+5. [User Workflow](#5-user-workflow)
+6. [Runtime State](#6-runtime-state)
+7. [Question Workflow](#7-question-workflow)
+8. [Navigation Workflow](#8-navigation-workflow)
+9. [Scoring Workflow](#9-scoring-workflow)
+10. [Recommendation Content Workflow](#10-recommendation-content-workflow)
+11. [Results Page Workflow](#11-results-page-workflow)
+12. [Localization Workflow](#12-localization-workflow)
+13. [Accessibility Workflow](#13-accessibility-workflow)
+14. [Naming, ID, Class, and Function Conventions](#14-naming-id-class-and-function-conventions)
+15. [Fast Update Guide](#15-fast-update-guide)
+
 ## 1. Goal of the App
 
 ### 1.1 Primary goal
@@ -491,7 +509,7 @@ These id keys should stay the same across the codebase:
   - `routeType`
   - `storage`
 
-Important rule:
+**Important consideration:**
 
 - if a new output id is added, it usually must also be added to:
   - `OUTPUTS`
