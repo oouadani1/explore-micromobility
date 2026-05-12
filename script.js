@@ -73,6 +73,7 @@ const REPORT_URL = "https://www.mass.gov/doc/special-commission-on-micromobility
 const BICYCLE_LAW_URL = "https://www.mass.gov/info-details/massachusetts-law-about-bicycles";
 const PRINT_ICON_SVG =
   '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 9V4h10v5"/><path d="M7 14H5a2 2 0 0 1-2-2v-1.5A2.5 2.5 0 0 1 5.5 8h13A2.5 2.5 0 0 1 21 10.5V12a2 2 0 0 1-2 2h-2"/><path d="M7 12h10v8H7z"/><circle cx="17.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/></svg>';
+let stepErrorAnnouncementTimer = null;
 const RECOMMENDATION_IMAGE_ALT_TEXT = {
   bicycle: "Traditional two-wheel bicycle",
   ebike: "Step-through electric bicycle",
@@ -3584,14 +3585,18 @@ function announceStepError(message) {
   const liveRegionEl = document.getElementById("stepErrorLive");
   if (!liveRegionEl) return;
 
-  liveRegionEl.textContent = "";
-  liveRegionEl.setAttribute("aria-hidden", "false");
+  if (stepErrorAnnouncementTimer) {
+    window.clearTimeout(stepErrorAnnouncementTimer);
+  }
 
-  window.setTimeout(() => {
+  liveRegionEl.textContent = "";
+
+  stepErrorAnnouncementTimer = window.setTimeout(() => {
     if (document.getElementById("stepErrorLive") === liveRegionEl) {
       liveRegionEl.textContent = message;
     }
-  }, 50);
+    stepErrorAnnouncementTimer = null;
+  }, 80);
 }
 
 function submitCurrentAnswers() {
@@ -3969,7 +3974,11 @@ function clearStepError() {
   const liveRegionEl = document.getElementById("stepErrorLive");
   if (liveRegionEl) {
     liveRegionEl.textContent = "";
-    liveRegionEl.setAttribute("aria-hidden", "true");
+  }
+
+  if (stepErrorAnnouncementTimer) {
+    window.clearTimeout(stepErrorAnnouncementTimer);
+    stepErrorAnnouncementTimer = null;
   }
 
   const questionId = getCurrentQuestionId();

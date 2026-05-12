@@ -559,10 +559,6 @@ Function names are mostly consistent and should stay that way for stability:
 - `apply...`: mutate score state or rules
 - `enforce...`: apply post-sort ranking constraints
 
-**Important consideration:**
-
-- if a function both computes data and writes DOM, consider splitting it rather than giving it an unclear hybrid name
-
 ## 15. Fast Update Guide
 
 If you need to update the app quickly, use this map:
