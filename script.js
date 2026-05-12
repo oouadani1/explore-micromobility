@@ -4165,12 +4165,11 @@ function getVisibleQuestionKeys(answers) {
     keys.push("transitLink");
   }
 
-  keys.push(
-    "carryChildren",
-    "distance",
-    "routeType",
-    "storage"
-  );
+  if (answers.pathway !== "child") {
+    keys.push("carryChildren");
+  }
+
+  keys.push("distance", "routeType", "storage");
 
   return keys;
 }
