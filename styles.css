@@ -67,6 +67,7 @@ h1 {
   margin-bottom: 12px;
   color: var(--text-blue-aa);
   font-size: 28px;
+  text-wrap: balance;
 }
 
 h2,
@@ -106,6 +107,7 @@ h4,
   font-size: 17px;
   font-weight: 400;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .landing-actions {
@@ -196,6 +198,7 @@ label {
   font-weight: 600;
   line-height: 1.3;
   color: var(--text-blue-aa);
+  text-wrap: balance;
 }
 
 .question-fieldset {
@@ -1098,6 +1101,7 @@ body.results-view-active .site-branding {
   line-height: 1.35;
   font-weight: 500;
   color: #222;
+  text-wrap: pretty;
 }
 
 .option-card--with-image {
@@ -1793,6 +1797,7 @@ body.results-view-active #result {
   margin-bottom: 0;
   font-size: 28px;
   line-height: 1.25;
+  text-wrap: balance;
 }
 
 .results-intro-heading:focus {
@@ -1865,6 +1870,7 @@ body.results-view-active #result {
   margin-bottom: 18px;
   font-size: 36px;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 .device-image {
@@ -1960,6 +1966,7 @@ body.results-view-active #result {
   gap: 16px;
   box-shadow: none;
   touch-action: manipulation;
+  text-wrap: pretty;
 }
 
 .details-toggle-btn::after {
@@ -2016,6 +2023,7 @@ body.results-view-active #result {
   margin-top: 16px;
   font-size: 15px;
   color: #000000;
+  text-wrap: balance;
 }
 
 .results-actions-mobile {
@@ -2123,6 +2131,7 @@ body.results-view-active #result {
       "methodology"
       "print";
     gap: 12px;
+    touch-action: pan-y;
   }
 
   .results-intro-heading {
@@ -2184,6 +2193,7 @@ body.results-view-active #result {
   .recommendation-card {
     padding: 18px 16px 20px;
     border-radius: 22px;
+    touch-action: pan-y;
   }
 
   .recommendation-title {

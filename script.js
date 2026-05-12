@@ -2714,12 +2714,34 @@ function formatTextForPathway(text, pathway) {
 
   if (pathway === "exploring") {
     return text
+      .replace(/could be an excellent option for you if you want the convenience of riding without needing to own or store a device/gi, "can be an excellent option when the convenience of riding matters more than owning or storing a device")
+      .replace(/Given you use transit during your commute/gi, "If public transit is part of the trip")
+      .replace(/Given you use transit/gi, "If public transit is part of the trip")
+      .replace(/If you use transit during your commute/gi, "If public transit is part of the trip")
+      .replace(/Because you plan to work with your micromobility device/gi, "For delivery or work use")
+      .replace(/Because you plan to work with this device/gi, "For delivery or work use")
+      .replace(/Because you plan to work/gi, "For delivery or work use")
+      .replace(/Because you need to store your device outdoors/gi, "If outdoor storage is important")
+      .replace(/Because you need to store the device outdoors/gi, "If outdoor storage is important")
       .replace(/Since you will carry children/gi, "If carrying children is a priority")
       .replace(/Since you plan to carry children/gi, "If carrying children is a priority")
       .replace(/Since you are carrying children/gi, "If carrying children is a priority")
+      .replace(/If you decide a cargo bike is the right fit for you/gi, "If a cargo bike is the right fit")
+      .replace(/If you'll mostly travel longer distances/gi, "For longer-distance travel")
+      .replace(/If you plan to store/gi, "If storing")
+      .replace(/If you are storing/gi, "If storing")
+      .replace(/If you live/gi, "If living")
       .replace(/With the right add-ons, it can support carrying a child\./gi, "With the right add-ons, it can support carrying a child if needed.")
       .replace(/Some models can also support carrying children or extra cargo\./gi, "Some models can also support carrying children or extra cargo if needed.")
-      .replace(/Carrying children with cargo bikes is an excellent and fun option because they are designed to carry people securely\./gi, "Cargo bikes can be a strong option for carrying children because they are designed to carry people securely.");
+      .replace(/Carrying children with cargo bikes is an excellent and fun option because they are designed to carry people securely\./gi, "Cargo bikes can be a strong option for carrying children because they are designed to carry people securely.")
+      .replace(/the best e-bike class for you/gi, "the best e-bike class for the rider")
+      .replace(/your comfort will depend on/gi, "comfort will depend on")
+      .replace(/you do not need to store a device at home/gi, "there is no need to store a device at home")
+      .replace(/\b[Yy]our trip\b/g, "the trip")
+      .replace(/\b[Yy]our device\b/g, "the device")
+      .replace(/\b[Yy]our bike\b/g, "the bicycle")
+      .replace(/\b[Yy]our\b/g, "the rider's")
+      .replace(/\b[Yy]ou\b/g, "the rider");
   }
 
   if (pathway !== "someoneElse") {
@@ -3449,7 +3471,6 @@ function renderCurrentRecommendationPage() {
   renderFooterDisclaimer();
   setFooterDisclaimerVisibility(true);
 
-  const cardEl = result.querySelector(".recommendation-card");
   const allResultsPanel = result.querySelector(".all-results-panel");
   const resultsMethodology = result.querySelector(".results-methodology");
   const resultsHeading = result.querySelector("#resultsHeading");
@@ -3509,7 +3530,6 @@ function renderCurrentRecommendationPage() {
     resultsHeading.focus();
   }
 
-  bindMobileRecommendationSwipe(cardEl, recommendations.length);
 }
 
 function bindDisclosureToggle(rootEl, onToggle) {
@@ -3543,38 +3563,6 @@ function bindDisclosureToggle(rootEl, onToggle) {
   });
 
   setExpanded(buttonEl.getAttribute("aria-expanded") === "true");
-}
-
-function bindMobileRecommendationSwipe(cardEl, totalRecommendations) {
-  if (!cardEl || window.innerWidth > 768 || totalRecommendations < 2) return;
-
-  let touchStartX = 0;
-  let touchStartY = 0;
-
-  cardEl.addEventListener("touchstart", (event) => {
-    const touch = event.changedTouches[0];
-    touchStartX = touch.clientX;
-    touchStartY = touch.clientY;
-  }, { passive: true });
-
-  cardEl.addEventListener("touchend", (event) => {
-    const touch = event.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX;
-    const deltaY = touch.clientY - touchStartY;
-
-    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
-
-    if (deltaX < 0) {
-      APP_STATE.currentResultIndex =
-        (APP_STATE.currentResultIndex + 1) % totalRecommendations;
-      renderCurrentRecommendationPage();
-      return;
-    }
-
-    APP_STATE.currentResultIndex =
-      (APP_STATE.currentResultIndex - 1 + totalRecommendations) % totalRecommendations;
-    renderCurrentRecommendationPage();
-  }, { passive: true });
 }
 
 function announceStepError(message) {
