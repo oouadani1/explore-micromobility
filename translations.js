@@ -332,7 +332,7 @@ window.MICROMOBILITY_TRANSLATIONS = {
         ],
         considerConditional: {
           age14to16:
-            "Según la edad, se sugieren bicicletas eléctricas de Clase 1 por su velocidad y potencia más manejables. Esta recomendación se basa en el informe de la Comisión Especial sobre Micromovilidad. Pide más información a tu familia o consulta Próximos pasos.",
+            "Según la edad, se sugieren bicicletas eléctricas de Clase 1 por su velocidad y potencia más manejables. Esto sigue las reglas usadas en esta herramienta y las reglas vigentes en Massachusetts. Pide más información a tu familia o consulta Próximos pasos.",
           deliveries:
             "Da prioridad a un modelo con batería removible de alta capacidad, frenos potentes y motor central si hay cuestas o cargas pesadas.",
           transitLinkYes:

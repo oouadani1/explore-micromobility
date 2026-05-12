@@ -102,7 +102,7 @@ const DEVICE_CONTENT = {
       adaptiveNeedNo: "",
       // Primary use
       transport: "",
-      deliveries: "Additionally, some adaptive cycles can be configured to carry work items, equipment, or larger everyday loads.",
+      deliveries: "With the right racks or bags, a bicycle can also carry work items, equipment, or larger everyday loads.",
       recreation: "It is especially well suited for recreation and exercise.",
       // Transit link
       transitLinkYes: "Connecting to transit is also convenient with a bicycle.",
@@ -120,7 +120,7 @@ const DEVICE_CONTENT = {
       routeRegularRoads: "",
       routeTrails: "Some types of bikes, such as mountain bikes, are commonly used on trails and unpaved paths.",
       // Storage
-      storageIndoor: "Indoor storage can support security, weather protection, and charging needs for some adaptive models.",
+      storageIndoor: "Indoor storage can support security, weather protection, and easier day-to-day upkeep.",
       storageOutdoor: "",
       storageNotMajorConcern: ""
     },
@@ -151,7 +151,7 @@ const DEVICE_CONTENT = {
       // Distance
       distanceUnder3: "",
       distance3to9: "",
-      distance10plus: "Investing in a high-quality seat and ensuring your bike fits you well for long distance trips can make your ride more comfortable.",
+      distance10plus: "Investing in a high-quality seat and making sure the bicycle fits well can make longer trips more comfortable.",
       // Route type
       routeBikeLanes: "",
       routeMixedRoads: "",
@@ -203,7 +203,7 @@ const DEVICE_CONTENT = {
       // Route type
       routeBikeLanes: "",
       routeMixedRoads: "",
-      routeRegularRoads: "Because they can keep up with traffic better, e-bikes feel more comofortable on roads without bike lanes",
+      routeRegularRoads: "Because they can keep up with traffic better, e-bikes often feel more comfortable on roads without bike lanes.",
       routeTrails: "E-bikes are only allowed on some Massachusetts trails, and at limited speeds. Check your local Department of Conservation and Recreation (DCR) regulations to learn more.",
       // Storage
       storageIndoor: "",
@@ -212,7 +212,7 @@ const DEVICE_CONTENT = {
     },
     considerBase: [
       "Choose e-bikes with batteries and electrical systems certified to Underwriters Laboratories (UL) safety standards.",
-      "Since they can look similiar, be careful not to confuse an e-bike with a higher-powered e-moto or e-dirt bike, which are considered Off-Highway Vehicles (OHVs) and must be registered with the Massachusetts Environmental Police.",
+      "Since they can look similar, be careful not to confuse an e-bike with a higher-powered e-moto or e-dirt bike, which are considered Off-Highway Vehicles (OHVs) and must be registered with the Massachusetts Environmental Police.",
       "E-bikes come in three classes. Use the More resources section to select the best e-bike class for you."
     ],
     // CONSIDER CONDITIONAL
@@ -220,7 +220,7 @@ const DEVICE_CONTENT = {
     considerConditional: {
       // Age
       age3to13: "",
-      age14to16: "For ages 14 to 16, this explorer shows Class 1 e-bikes. This reflects the tool's current implementation of the Special Commission on Micromobility report and current Massachusetts rules.",
+      age14to16: "For ages 14 to 16, this explorer shows Class 1 e-bikes. This follows the rules used in this tool and current Massachusetts rules.",
       age17to49: "",
       age50plus: "",
       // Adaptive need
@@ -229,7 +229,6 @@ const DEVICE_CONTENT = {
       // Primary use
       transport: "",
       deliveries: "Prioritize a model with a high-capacity removable battery, strong brakes, and a mid-drive motor for hills and heavy loads.",
-      recreation: "",
       recreation: "",
       // Transit link
       transitLinkYes: "Check Massachusetts Bay Transportation Authority (MBTA) or your local Regional Transit Authority (RTA) rules before bringing a device on a bus or train, and look into nearby station bike parking or bike shed options where available. Use the More resources section for more information.",
@@ -495,7 +494,7 @@ const DEVICE_CONTENT = {
       routeTrails: "",
       // Storage
       storageIndoor: "Cargo bikes are not ideal to store indoors because of their heavy weight and length. If you plan to store one inside a shed or garage and it has a battery, follow safe charging practices to avoid the risk of thermal runaway and fire. Use the More resources section for information on safe charging.",
-      storageOutdoor: "If you plan to to store a cargo bike outdoors, always remove the battery (if it has one), consider a high-quality lock and weatherproof tarp, and ensure it is parked in a safe place.",
+      storageOutdoor: "If you plan to store a cargo bike outdoors, always remove the battery (if it has one), consider a high-quality lock and weatherproof tarp, and ensure it is parked in a safe place.",
       storageNotMajorConcern: ""
     },
     nextSteps: [
@@ -3857,7 +3856,7 @@ function renderQuestion() {
               </label>
             `).join("")}
           </div>
-          <div id="stepError" class="error-message hidden" style="margin-top: 8px;"></div>
+          <div id="stepError" class="error-message step-error-message hidden"></div>
         </fieldset>
       </div>
     `;
@@ -3891,9 +3890,9 @@ function renderQuestion() {
         value="${savedValue}"
         placeholder="${isSpanishLocale() ? getUiText("agePlaceholder") : "Enter age"}"
         ${describedByIds ? `aria-describedby="${describedByIds}"` : ""}
-        style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d0d0d0; font-size: 15px; box-sizing: border-box;"
+        class="question-text-input"
       />
-      <div id="stepError" class="error-message hidden" style="margin-top: 8px;"></div>
+      <div id="stepError" class="error-message step-error-message hidden"></div>
     </div>
   `;
 
