@@ -1,6 +1,6 @@
 # Explore Micromobility Technical Workflow
 
-The purpose of this document is to serve as Explore Micromobility's complete documentation and to facilitate knowledge transfer. It explains what the app is trying to do, how the workflow and scoring work, which conventions should remain stable, and which risks or future changes are most important to understand before making updates. Documentation prepared by Oussama Ouadani, Lab @ MassDOT Fellow, om May 12, 2026. Explore Micromobility was developed as a light-weight web app by the Lab in Spring 2026, per the recommendations made by the Special Commission on Micromobility Report, which was filed with the Legislature in January 2026. The app is written in JavaScript, HTML, and CSS. 
+Explore Micromobility was developed as a light-weight web app by the Lab in Spring 2026, per the recommendations made by the Special Commission on Micromobility Report, which was filed with the Legislature in January 2026. The app is written in JavaScript, HTML, and CSS. The purpose of this document is to serve as Explore Micromobility's technical documentation and to facilitate knowledge transfer. It explains what the app is trying to do, how the workflow and scoring work, which conventions should remain stable, and which risks or future changes are most important to understand before making updates. Documentation prepared by Oussama Ouadani, Lab @ MassDOT Fellow, on May 12, 2026. This tool has gone through multiple rounds of rigorous testing with internal MassDOT and MBTA stakeholders across various department as reflects commonly-requested features, behaviors, and a high standard of polish. Further, the tool was audited and refined with the Accessibility team to ensure it meets all WCAG 2.2 standards. 
 
 ## 1. Goal of the App
 
@@ -142,10 +142,10 @@ Current branching rules:
   - 8 questions default
   - 9 if `primaryUse = transport`
 - `child`:
-  - 7 questions normally
+  - 7 questions default 
   - 8 if `primaryUse = transport`
 - `exploring`:
-  - 1 question
+  - 1 question only, immediately shows results
 
 Pathway-specific wording is handled by `getQuestionLabelForPathway()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1782).
 
@@ -192,7 +192,7 @@ The app currently scores 8 outputs, defined in `OUTPUTS` in [script.js](/Users/o
 
 ### 9.2 Score pipeline
 
-The scoring process is:
+The scoring process is as follows:
 
 1. Raw answers are normalized by `normalizeAnswers()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1684).
 2. `ageInput` is converted into an age bracket:
@@ -203,11 +203,12 @@ The scoring process is:
 3. `calculateScores()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1719) starts all devices at `0`.
 4. For each normalized answer, the app looks up the matching rule block in `SCORING_RULES`.
 5. Nonzero points are added to device totals.
-6. `applyOverrides()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1604) then applies hard visibility and ranking rules.
-7. `getSortedRecommendations()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1734) sorts remaining finite scores high to low.
-8. Placement helpers then adjust rank for special cases:
-   - `enforceCargoBikePlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1655)
-   - `enforceAdaptiveMobilityPlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1669)
+6. `applyOverrides()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1547) applies hard visibility rules after the additive points are tallied. These are based on existing Massachusetts law or recommended future practices made by the Special Commission on Micromobility Report.
+7. `getSortedRecommendations()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1684) sorts remaining finite scores high to low.
+8. If two outputs have the same score, the tie is broken by the stable output order already defined in `OUTPUTS`.
+9. Placement helpers then adjust rank for special cases:
+   - `enforcePriorityPlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1630)
+   - `enforceCargoBikePlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1614)
 
 ### 9.3 Point range
 
@@ -218,7 +219,8 @@ The scoring model is purposefully simple:
 - the age 3 to 13 youth rule gives `humanPoweredYouth +10`
 - hard overrides use:
   - `-Infinity` to hide an option
-  - `999` and `1000` to force youth/adaptive priority in specific cases
+
+Priority placement is handled after scoring through explicit ranking helpers, not artificial high scores. This keeps the scoring scale consistent and easier to maintain.
 
 ### 9.4 Scoring parameters
 
@@ -274,8 +276,8 @@ After additive scoring, the app applies hard rules in `applyOverrides()`:
   - no visibility overrides are applied
 - `age3to13`:
   - hides all adult-oriented devices
-  - sets `humanPoweredYouth = 999`
-  - if `adaptiveNeed = yes`, sets `adaptiveMobility = 1000`
+  - keeps `humanPoweredYouth` visible
+  - keeps `adaptiveMobility` visible only if `adaptiveNeed = yes`
 - `age14to16`:
   - hides `escooter`, `lowSpeedPoweredMicromobility`, `bikeshare`
 - `age50plus`:
@@ -295,12 +297,14 @@ After additive scoring, the app applies hard rules in `applyOverrides()`:
 
 ### 9.6 Ranking rules after scoring
 
-Two extra placement rules are applied after sorting:
+The app uses explicit ranking rules after sorting instead of score hacks:
 
+- if `age3to13` and `adaptiveNeed = yes`, move `adaptiveMobility` to position 1 and `humanPoweredYouth` to position 2
+- if `age3to13` and `adaptiveNeed != yes`, move `humanPoweredYouth` to position 1
+- if `adaptiveNeed = yes` outside the youth path, move `adaptiveMobility` to position 1
 - if `carryChildren = yes`, move `cargoBike` to at least position 2
-- if `adaptiveNeed = yes`, move `adaptiveMobility` to position 1
 
-These are ranking adjustments, not new points.
+These are ranking adjustments, not new points. This separation keeps the additive scoring model clean and makes priority rules easier to inspect during maintenance.
 
 ### 9.7 Results selection
 
@@ -487,6 +491,7 @@ Important rule:
   - `DEVICE_CONTENT`
   - localized output labels
   - localized device content if needed
+- output order inside `OUTPUTS` also acts as the stable tie-break order when two devices end with the same score
 
 ### 14.2 ID conventions
 
@@ -573,8 +578,8 @@ If you need to update the app quickly, use this map:
 - change hard hide/show rules:
   - `applyOverrides()`
 - change forced ranking:
+  - `enforcePriorityPlacement()`
   - `enforceCargoBikePlacement()`
-  - `enforceAdaptiveMobilityPlacement()`
 - change recommendation narrative:
   - `DEVICE_CONTENT`
   - localized overrides in `translations.js`
@@ -601,7 +606,7 @@ These are problems that have already come up during development and review:
 
 These are likely future risks if the app grows without guardrails:
 
-- scoring rules and hard overrides drifting out of sync
+- scoring rules, visibility rules, and ranking rules drifting out of sync
 - English and Spanish content drifting apart
 - accessibility regressions when changing question flow or results markup
 - output ids being added in one place but not all required places

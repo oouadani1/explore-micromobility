@@ -32,6 +32,10 @@ const OUTPUTS = {
     shortLabel: "Youth mobility"
   }
 };
+const OUTPUT_ORDER = Object.keys(OUTPUTS);
+const OUTPUT_ORDER_INDEX = Object.fromEntries(
+  OUTPUT_ORDER.map((outputId, index) => [outputId, index])
+);
 
 const APP_NAME = "Explore Micromobility";
 const LANDING_PAGE_COPY = {
@@ -1557,10 +1561,8 @@ function applyOverrides(scores, answers) {
     adjusted.lowSpeedPoweredMicromobility = Number.NEGATIVE_INFINITY;
     adjusted.cargoBike = Number.NEGATIVE_INFINITY;
     adjusted.bikeshare = Number.NEGATIVE_INFINITY;
-    adjusted.humanPoweredYouth = 999;
 
     if (answers.adaptiveNeed === "yes") {
-      adjusted.adaptiveMobility = 1000;
       return adjusted;
     }
 
@@ -1623,17 +1625,31 @@ function enforceCargoBikePlacement(sortedDevices, answers) {
   return sortedDevices;
 }
 
-function enforceAdaptiveMobilityPlacement(sortedDevices, answers) {
-  if (answers.adaptiveNeed !== "yes") return sortedDevices;
+function enforcePriorityPlacement(sortedDevices, answers) {
+  const priorityIds = [];
 
-  const adaptiveIndex = sortedDevices.findIndex((d) => d.id === "adaptiveMobility");
+  if (answers.age === "age3to13") {
+    if (answers.adaptiveNeed === "yes") {
+      priorityIds.push("adaptiveMobility");
+    }
 
-  if (adaptiveIndex === -1) return sortedDevices;
+    priorityIds.push("humanPoweredYouth");
+  } else if (answers.adaptiveNeed === "yes") {
+    priorityIds.push("adaptiveMobility");
+  }
 
-  const adaptive = sortedDevices.splice(adaptiveIndex, 1)[0];
-  sortedDevices.unshift(adaptive);
+  if (!priorityIds.length) return sortedDevices;
 
-  return sortedDevices;
+  const remaining = [...sortedDevices];
+  const prioritized = [];
+
+  priorityIds.forEach((outputId) => {
+    const index = remaining.findIndex((device) => device.id === outputId);
+    if (index === -1) return;
+    prioritized.push(remaining.splice(index, 1)[0]);
+  });
+
+  return [...prioritized, ...remaining];
 }
 
 function normalizeAnswers(rawAnswers) {
@@ -1681,10 +1697,10 @@ function getSortedRecommendations(scores, answers) {
       label: getOutputLabel(id),
       score
     }))
-    .sort((a, b) => b.score - a.score);
+    .sort((a, b) => (b.score - a.score) || (OUTPUT_ORDER_INDEX[a.id] - OUTPUT_ORDER_INDEX[b.id]));
 
+  sortedDevices = enforcePriorityPlacement(sortedDevices, answers);
   sortedDevices = enforceCargoBikePlacement(sortedDevices, answers);
-  sortedDevices = enforceAdaptiveMobilityPlacement(sortedDevices, answers);
 
   return sortedDevices;
 }
