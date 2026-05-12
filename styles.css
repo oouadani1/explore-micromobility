@@ -11,6 +11,8 @@ body {
     linear-gradient(180deg, #dbeaf7 0%, #c9def0 45%, #b9d2e7 100%);
   color: #222;
   min-height: 100svh;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 :root {
@@ -222,6 +224,8 @@ button {
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:hover,
@@ -1911,6 +1915,13 @@ body.results-view-active #result {
   line-height: 1.6;
 }
 
+.next-step-item a,
+.results-methodology__links a,
+.footer-disclaimer a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .device-cost {
   margin: 18px 0 0;
   padding-top: 16px;
@@ -1948,6 +1959,7 @@ body.results-view-active #result {
   justify-content: space-between;
   gap: 16px;
   box-shadow: none;
+  touch-action: manipulation;
 }
 
 .details-toggle-btn::after {
@@ -2034,31 +2046,43 @@ body.results-view-active #result {
 
 @media (max-width: 768px) {
   .container {
-    padding: 12px;
+    padding: 10px;
   }
 
   .card {
     min-height: calc(100svh - 24px);
-    padding: 18px 16px 20px;
+    padding: 16px 14px 18px;
     border-radius: 18px;
+  }
+
+  .landing-header {
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .landing-header h1 {
+    font-size: 24px;
+    line-height: 1.15;
   }
 
   .intro {
     max-width: none;
     font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 16px;
+    line-height: 1.55;
+    margin-bottom: 14px;
   }
 
   .landing-actions {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
   .landing-start-btn {
     width: 100%;
     min-width: 0;
-    min-height: 68px;
-    font-size: 20px;
+    min-height: 64px;
+    padding: 16px 20px;
+    border-radius: 20px;
+    font-size: 18px;
   }
 
   body.question-flow-active #introText:not(.hidden) {
@@ -2067,23 +2091,25 @@ body.results-view-active #result {
 
   .question-label {
     max-width: none;
-    margin-bottom: 14px;
-    font-size: 24px;
+    margin-bottom: 12px;
+    font-size: 22px;
+    line-height: 1.22;
   }
 
   .option-grid {
-    gap: 10px;
+    gap: 9px;
   }
 
   .option-card {
-    min-height: 86px;
-    padding: 16px;
+    min-height: 78px;
+    padding: 14px;
+    gap: 12px;
   }
 
   .option-card-indicator {
-    width: 19px;
-    height: 19px;
-    flex-basis: 19px;
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
   }
 
   body.results-view-active #result {
@@ -2091,51 +2117,95 @@ body.results-view-active #result {
     grid-template-areas:
       "intro"
       "toolbar"
-      "card"
       "actions"
+      "card"
       "all-results"
       "methodology"
       "print";
-    gap: 14px;
+    gap: 12px;
   }
 
   .results-intro-heading {
-    font-size: 22px;
+    font-size: 20px;
+    line-height: 1.2;
   }
 
   .results-toolbar {
-    padding: 12px 14px;
-    border-radius: 18px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    gap: 8px;
   }
 
   .results-pager {
     width: 100%;
-    padding: 4px 6px;
+    padding: 3px 5px;
   }
 
   .results-counter {
     min-width: 0;
+    font-size: 14px;
+  }
+
+  .results-arrow-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    flex-basis: 42px;
+  }
+
+  .results-actions-mobile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .results-back-btn-mobile,
+  .results-restart-btn-mobile {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    margin-top: 0;
+    padding: 0 12px;
     font-size: 15px;
   }
 
+  .results-print-btn-mobile {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    margin-top: 0;
+    justify-self: end;
+  }
+
   .recommendation-card {
-    padding: 22px 18px 24px;
+    padding: 18px 16px 20px;
     border-radius: 22px;
   }
 
   .recommendation-title {
     max-width: none;
-    font-size: 28px;
+    font-size: 24px;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+
+  .device-image {
+    max-width: 280px;
+    margin: 4px auto 6px;
   }
 
   .recommendation-reason {
-    font-size: 15px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.6;
   }
 
   .guidance,
   .next-steps {
-    padding: 18px 16px;
+    padding: 16px 14px;
     border-radius: 18px;
   }
 
@@ -2146,21 +2216,63 @@ body.results-view-active #result {
 
   .all-results-panel summary,
   .results-methodology summary {
-    padding: 14px 16px;
+    padding: 13px 14px;
   }
 
   .all-results-list,
   .results-methodology__body {
-    padding: 0 16px 16px;
+    padding: 0 14px 14px;
   }
 
   .footer-branding {
     padding-top: 0;
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .site-footer {
+    padding-top: 16px;
+  }
+
+  .site-branding {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+  .footer-meta {
+    font-size: 12px;
+    line-height: 1.35;
   }
 
   .footer-disclaimer {
-    padding-top: 8px;
+    padding-top: 6px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .option-card,
+  .landing-start-btn,
+  .results-arrow-btn,
+  .results-back-btn,
+  .results-restart-btn,
+  .results-print-btn,
+  .details-toggle-btn {
+    transition:
+      box-shadow 0.18s ease,
+      border-color 0.18s ease,
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .option-card:hover,
+  .landing-start-btn:hover,
+  .results-arrow-btn:hover,
+  .results-back-btn:hover,
+  .results-restart-btn:hover,
+  .results-print-btn:hover,
+  .details-toggle-btn:hover {
+    transform: none;
   }
 }
 
