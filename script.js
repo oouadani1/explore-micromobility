@@ -34,20 +34,18 @@ const OUTPUTS = {
 };
 
 const APP_NAME = "Explore Micromobility";
-const INTRO_TEXT =
-  "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Selecting an answer automatically opens the next question, and the last question opens your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law.";
 const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
     introText:
-      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Selecting an answer automatically opens the next question, and the last question opens your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law."
+      "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Select an answer, then use Next to move to the next question. The last question uses Explore results to open your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law."
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
     introText:
-      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más, a partir de responder algunas preguntas. La herramienta muestra una pregunta a la vez y tiene como máximo 9 preguntas, según tus selecciones. Al seleccionar una respuesta, se abre automáticamente la siguiente pregunta y la última pregunta abre tus resultados. Explore Micromobility muestra estos dispositivos usando un sistema aditivo simple basado en tus respuestas. Este sistema de puntuación se basa en las reglas propuestas por la Special Commission on Micromobility y la ley general vigente de Massachusetts."
+      "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más, a partir de responder algunas preguntas. La herramienta muestra una pregunta a la vez y tiene como máximo 9 preguntas, según tus selecciones. Selecciona una respuesta y luego usa Siguiente para pasar a la siguiente pregunta. La última pregunta usa Explorar resultados para abrir tus resultados. Explore Micromobility muestra estos dispositivos usando un sistema aditivo simple basado en tus respuestas. Este sistema de puntuación se basa en las reglas propuestas por la Special Commission on Micromobility y la ley general vigente de Massachusetts."
   }
 };
 const RESULTS_INTRO_TEXT = "Based on your responses, explore these micromobility options.";
@@ -1468,62 +1466,6 @@ function renderLocaleChrome() {
       getQuestionNextButtonLabel(getCurrentQuestionId())
     );
   }
-}
-
-const DEBUG_MODE = false;
-
-function printCurrentResponseScores(answers, scores, sortedRecommendations) {
-  if (!DEBUG_MODE) {
-    return;
-  }
-
-  const deviceOrder = [
-    "bicycle",
-    "ebike",
-    "escooter",
-    "lowSpeedPoweredMicromobility",
-    "cargoBike",
-    "adaptiveMobility",
-    "bikeshare",
-    "humanPoweredYouth"
-  ];
-
-  const pathway = answers.pathway || "myself";
-  const questionRows = getPrintableQuestionKeys(APP_STATE.answers || {})
-    .map((questionId) => ({
-      question: getQuestionLabelForPathway(questionId, pathway),
-      answer: getAnswerDisplayValue(questionId, APP_STATE.answers?.[questionId] || "")
-    }))
-    .filter((row) => row.answer);
-
-  console.groupCollapsed("Current response questions and answers");
-  console.table(questionRows);
-  console.groupEnd();
-
-  console.groupCollapsed("Current response normalized answers");
-  console.table(answers);
-  console.groupEnd();
-
-  console.groupCollapsed("Current response scores by device");
-  console.table(
-    deviceOrder
-      .filter((device) => scores[device] !== undefined)
-      .map((device) => ({
-        device,
-        score: scores[device]
-      }))
-  );
-  console.groupEnd();
-
-  console.groupCollapsed("Current sorted recommendations");
-  console.table(
-    sortedRecommendations.map((rec, index) => ({
-      rank: index + 1,
-      device: rec.id,
-      score: rec.score
-    }))
-  );
-  console.groupEnd();
 }
 
 function getSelectedPathway() {
@@ -3658,8 +3600,6 @@ function submitCurrentAnswers() {
       ? allRecommendations
       : getTopRecommendations(allRecommendations);
 
-  printCurrentResponseScores(normalizedAnswers, scores, allRecommendations);
-
   renderRecommendations(
     recommendations,
     allRecommendations,
@@ -3899,6 +3839,7 @@ function renderQuestion() {
                   value="${option.value}"
                   ${savedValue === option.value ? "checked" : ""}
                 >
+                <span class="option-card-indicator" aria-hidden="true"></span>
                 ${usesRouteImages ? `
                   <span class="option-card-media">
                     <img

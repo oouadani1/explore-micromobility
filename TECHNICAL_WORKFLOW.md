@@ -1,8 +1,26 @@
 # Explore Micromobility Technical Workflow
 
-This document is for hosting, walkthrough, and knowledge transfer. It describes how the app works today, where the main logic lives, how scoring is calculated, and which areas are easiest to update if the structure, wording, or recommendations change.
+The purpose of this document is to serve as Explore Micromobility's complete documentation and to facilitate knowledge transfer. It explains what the app is trying to do, how the workflow and scoring work, which conventions should remain stable, and which risks or future changes are most important to understand before making updates. Documentation prepared by Oussama Ouadani, Lab @ MassDOT Fellow, om May 12, 2026. Explore Micromobility was developed as a light-weight web app by the Lab in Spring 2026, per the recommendations made by the Special Commission on Micromobility Report, which was filed with the Legislature in January 2026. The app is written in JavaScript, HTML, and CSS. 
 
-## 1. What This App Is
+## 1. Goal of the App
+
+### 1.1 Primary goal
+
+Explore Micromobility helps a user explore micromobility options in a lightweight, public-facing way. It is not meant to make a legal, safety, financial, medical, or purchasing decision for the user.
+
+### 1.2 Why the app exists
+
+The app translates existing and recommended Massachusetts policy and law into a short guided experience that is easier for the public to use than reading a report or legal text directly.
+
+### 1.3 What the app is designed to do
+
+- ask a small number of questions
+- explain results in plain language
+- avoid endorsing a specific product
+- remain easy to maintain without a backend
+- stay accessible to keyboard and screen reader users
+
+## 2. What This App Is
 
 Explore Micromobility is a static front-end app. There is no backend, database, build step, or API.
 
@@ -15,30 +33,60 @@ Main files:
 
 The entire runtime is driven by `script.js`.
 
-## 2. High-Level Workflow
+## 3. How the App Achieves Its Goal
+
+The app achieves its goal by combining:
+
+- a guided question flow
+- a simple additive score model
+- a small number of hard visibility and ranking rules
+- plain-language recommendation language 
+- a results explanation accordion
+
+This keeps the app fast, transparent, and easy to host.
+
+## 4. Workflow Diagram
+
+```mermaid
+flowchart TD
+    A[Landing page] --> B[User starts exploring]
+    B --> C[Dynamic question flow]
+    C --> D[Raw answers saved in APP_STATE]
+    D --> E[normalizeAnswers]
+    E --> F[calculateScores]
+    F --> G[applyOverrides]
+    G --> H[getSortedRecommendations]
+    H --> I{Pathway}
+    I -->|exploring| J[Show all finite-score options]
+    I -->|all other pathways| K[Show top 2 options]
+    J --> L[Render results page]
+    K --> L
+    L --> M[Render recommendation copy]
+    L --> N[Render methodology accordion]
+    L --> O[Render other possible options]
+```
+
+## 5. User Workflow
 
 The user flow is:
 
 1. Landing page loads.
 2. User chooses a language if needed.
 3. User selects `Start exploring`.
-4. The app shows one question at a time.
-5. The app saves answers locally in memory only.
-6. When the last question is submitted, the app normalizes the answers, calculates scores, sorts device options, and renders results.
-7. The results page shows:
-   - the top recommendations
+4. Question 1 acts as four distinct pathways/branches, with each pathway slightly different to use specific langage and override certain results. 
+5. The app shows one question at a time, with a maximum of 9 total question, and selects an answers and then uses the next button to navigate.
+6. The app saves answers locally in memory only.
+7. When the last question is submitted, the app normalizes the answers, calculates scores, sorts device options, and renders results.
+8. The results page shows:
+   - the top two recommendations
    - explanation copy for the current recommendation
-   - an accordion that explains the scoring workflow
-   - other possible micromobility options
-   - print and reset actions
+   - an accordion that explains the scoring workflow (methodology of the app)
+   - an accordion that shows other possible micromobility options
+   - go back, print, and `Start over` actions, the latter of which brings the user back to the landing page
 
-Important current behavior:
 
-- The app no longer auto-advances on radio selection.
-- Users must select an answer and then use `Next` or `Explore results`.
-- `Start over` returns to the landing page.
 
-## 3. Runtime State
+## 6. Runtime State
 
 Current app state is stored in `APP_STATE` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1204).
 
@@ -49,17 +97,17 @@ Main fields:
 - `answers`: raw answers keyed by question id
 - `locale`: `en` or `es`
 - `currentResultIndex`: current recommendation card in the results carousel
-- `allResultsPanelOpen`: whether the “other possible options” disclosure is open
-- `resultsMethodologyOpen`: whether the methodology disclosure is open
-- `currentRecommendations`: currently rendered top-level recommendations
-- `currentAllRecommendations`: full sorted recommendation list
+- `allResultsPanelOpen`: whether the “other possible options” disclosure accordion is open
+- `resultsMethodologyOpen`: whether the methodology disclosure accordion is open
+- `currentRecommendations`: currently rendered top recommendations
+- `currentAllRecommendations`: sorted additional recommendation list
 - `currentNormalizedAnswers`: normalized scoring answers
 - `currentScores`: final device scores after overrides
 - `currentPathway`: active pathway used for the current results
 
-The app does not persist state across page reloads.
+The app does not persist state across page reloads. Some users have noted that using their browser's back button retains their answers, though I was not able to replicate this. This behavior should be alleviated by the recent addition of a back button. 
 
-## 4. Question Workflow
+## 7. Question Workflow
 
 Question metadata lives in `QUESTIONS` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1105).
 
@@ -75,7 +123,7 @@ Question ids:
 - `routeType`
 - `storage`
 
-The active question sequence is not fixed. It is built by `getVisibleQuestionKeys()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:4191).
+The active question sequence is not static, it is built dynamically by `getVisibleQuestionKeys()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:4191).
 
 Current branching rules:
 
@@ -88,10 +136,10 @@ Current branching rules:
   - show `carryChildren` for `myself` and `someoneElse`
   - do not show `carryChildren` for `child`
 
-Practical question counts:
+ Question total:
 
 - `myself` / `someoneElse`:
-  - 8 questions normally
+  - 8 questions default
   - 9 if `primaryUse = transport`
 - `child`:
   - 7 questions normally
@@ -103,10 +151,10 @@ Pathway-specific wording is handled by `getQuestionLabelForPathway()` in [script
 
 Special question behavior:
 
-- `ageInput` is rendered as a text input with numeric input mode, not a spinner.
+- `ageInput` uses a text input with numeric input mode.
 - In the `child` pathway, `primaryUse = deliveries` is hidden unless the entered age is 18 or older. This logic is in `getRenderedQuestionOptions()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:3678).
 
-## 5. Navigation Workflow
+## 8. Navigation Workflow
 
 Main UI render functions:
 
@@ -127,9 +175,9 @@ Results actions:
 - `Start over` clears state and returns to landing
 - `Print results` calls `window.print()`
 
-## 6. Scoring Workflow
+## 9. Scoring Workflow
 
-### 6.1 Outputs
+### 9.1 Outputs
 
 The app currently scores 8 outputs, defined in `OUTPUTS` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1):
 
@@ -142,7 +190,7 @@ The app currently scores 8 outputs, defined in `OUTPUTS` in [script.js](/Users/o
 - `adaptiveMobility`
 - `humanPoweredYouth`
 
-### 6.2 Score Pipeline
+### 9.2 Score pipeline
 
 The scoring process is:
 
@@ -161,9 +209,9 @@ The scoring process is:
    - `enforceCargoBikePlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1655)
    - `enforceAdaptiveMobilityPlacement()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1669)
 
-### 6.3 Point Range
+### 9.3 Point range
 
-The scoring model is intentionally simple:
+The scoring model is purposefully simple:
 
 - most direct answer-based point changes are between `-3` and `+3`
 - the strongest normal positive boost is `+3`
@@ -172,9 +220,9 @@ The scoring model is intentionally simple:
   - `-Infinity` to hide an option
   - `999` and `1000` to force youth/adaptive priority in specific cases
 
-### 6.4 Scoring Parameters
+### 9.4 Scoring parameters
 
-The exact score map is defined in `SCORING_RULES` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:792). The table below lists only nonzero changes. Any omitted device gets `0` for that answer.
+The exact score map is defined in `SCORING_RULES` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:792). The list below shows only nonzero changes. Any omitted device gets `0` for that answer.
 
 #### Age
 
@@ -218,7 +266,7 @@ The exact score map is defined in `SCORING_RULES` in [script.js](/Users/oo/Deskt
 - `indoor`: `bicycle +1`, `ebike +1`, `escooter +1`, `lowSpeedPoweredMicromobility +2`, `adaptiveMobility -1`, `bikeshare +1`
 - `outdoor`: `bicycle +2`, `ebike +1`, `escooter +1`, `bikeshare +2`
 
-### 6.5 Hard Overrides
+### 9.5 Hard overrides
 
 After additive scoring, the app applies hard rules in `applyOverrides()`:
 
@@ -245,7 +293,7 @@ After additive scoring, the app applies hard rules in `applyOverrides()`:
 - `storage = indoor`:
   - subtracts `1` from `cargoBike`
 
-### 6.6 Ranking Rules After Scoring
+### 9.6 Ranking rules after scoring
 
 Two extra placement rules are applied after sorting:
 
@@ -254,15 +302,15 @@ Two extra placement rules are applied after sorting:
 
 These are ranking adjustments, not new points.
 
-### 6.7 Results Selection
+### 9.7 Results selection
 
-- Standard pathways:
+- standard pathways:
   - the results page shows the top 2 finite-score recommendations
 - `exploring` pathway:
   - the results page shows all finite-score recommendations
-- The `Other possible micromobility options` disclosure shows additional positive-score results after the top 2
+- the `Other possible micromobility options` disclosure shows additional positive-score results after the top 2
 
-## 7. Recommendation Content Workflow
+## 10. Recommendation Content Workflow
 
 Recommendation content is stored in `DEVICE_CONTENT` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:85).
 
@@ -280,7 +328,7 @@ Localized device content can override the English defaults through `I18N.deviceC
 
 Merge behavior lives in `getDeviceContent()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1015).
 
-### 7.1 Why Text Assembly
+### 10.1 Why text assembly
 
 The main rationale paragraph is assembled from:
 
@@ -327,7 +375,7 @@ Conditional fragment slots currently supported in content:
   - `storageOutdoor`
   - `storageNotMajorConcern`
 
-### 7.2 Guidance Text Assembly
+### 10.2 Guidance text assembly
 
 The “What to know about this option” section uses:
 
@@ -340,13 +388,13 @@ Helpers:
 - `getConsiderConditionalValue()` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1088)
 - `CONSIDER_CONDITIONAL_KEY_MAP` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1075)
 
-### 7.3 Explore-All Copy
+### 10.3 Explore-all copy
 
 The `exploring` pathway does not use the normal recommendation explanation assembly. It uses `EXPLORE_REASON_TEXT` in [script.js](/Users/oo/Desktop/explore-micromobility/script.js:773).
 
 That pathway also skips the results methodology accordion.
 
-## 8. Results Page Workflow
+## 11. Results Page Workflow
 
 Results rendering starts in `renderRecommendations()` and then `renderCurrentRecommendationPage()`.
 
@@ -369,7 +417,7 @@ Supporting helpers:
 - disclosure panel of additional devices: `renderAllDeviceResultsPanel()`
 - print summary: `renderPrintSummary()`
 
-## 9. Localization Workflow
+## 12. Localization Workflow
 
 Current locale support:
 
@@ -384,7 +432,7 @@ Localization touchpoints:
 
 If English copy changes in `script.js`, Spanish often needs a parallel update in `translations.js`.
 
-## 10. Accessibility Workflow
+## 13. Accessibility Workflow
 
 Key accessibility behaviors already implemented:
 
@@ -403,7 +451,108 @@ Main accessibility-related render logic lives in:
 - `clearStepError()`
 - `renderCurrentRecommendationPage()`
 
-## 11. Fast Update Guide
+## 14. Naming, ID, Class, and Function Conventions
+
+This section is important for consistency. A new developer should not invent a new naming system if an existing one already works.
+
+### 14.1 Data key conventions
+
+These keys should stay aligned across the codebase:
+
+- output ids:
+  - `bicycle`
+  - `ebike`
+  - `escooter`
+  - `lowSpeedPoweredMicromobility`
+  - `cargoBike`
+  - `bikeshare`
+  - `adaptiveMobility`
+  - `humanPoweredYouth`
+- question ids:
+  - `pathway`
+  - `ageInput`
+  - `adaptiveNeed`
+  - `primaryUse`
+  - `transitLink`
+  - `carryChildren`
+  - `distance`
+  - `routeType`
+  - `storage`
+
+Important rule:
+
+- if a new output id is added, it usually must also be added to:
+  - `OUTPUTS`
+  - `SCORING_RULES`
+  - `DEVICE_CONTENT`
+  - localized output labels
+  - localized device content if needed
+
+### 14.2 ID conventions
+
+DOM ids are used for both scripting and accessibility. They should not be renamed casually.
+
+Examples:
+
+- `progress`
+- `formStep`
+- `result`
+- `backBtn`
+- `nextBtn`
+- `resultsHeading`
+- `results-methodology-trigger`
+- `results-methodology-panel`
+- `stepError`
+- `stepErrorLive`
+
+Important rule:
+
+- if an id is changed, check all:
+  - event listeners
+  - `aria-labelledby`
+  - `aria-controls`
+  - `aria-describedby`
+  - focus management
+
+### 14.3 CSS class conventions
+
+The CSS is not strict BEM, but it is moving in that direction for complex result components.
+
+Patterns already in use:
+
+- state classes:
+  - `hidden`
+  - `is-active`
+- component classes:
+  - `landing-*`
+  - `option-card*`
+  - `results-*`
+  - `recommendation-*`
+  - `results-methodology*`
+- utility/accessibility classes:
+  - `visually-hidden`
+
+Important rule:
+
+- when extending an existing component, prefer its current prefix instead of inventing a new unrelated class family
+
+### 14.4 JavaScript function naming conventions
+
+Function names are fairly consistent and should stay that way:
+
+- `get...`: read or derive a value
+- `set...`: update state or context
+- `render...`: write DOM
+- `handle...`: user interaction
+- `normalize...`: convert raw inputs into scoring-friendly form
+- `apply...`: mutate score state or rules
+- `enforce...`: apply post-sort ranking constraints
+
+Important rule:
+
+- if a function both computes data and writes DOM, consider splitting it rather than giving it an unclear hybrid name
+
+## 15. Fast Update Guide
 
 If you need to update the app quickly, use this map:
 
@@ -437,20 +586,64 @@ If you need to update the app quickly, use this map:
   - `renderCurrentRecommendationPage()`
   - locale strings in `translations.js`
 
-## 12. Gaps and Improvement Targets
+## 16. Problems Already Seen
+
+These are problems that have already come up during development and review:
+
+- accessibility regressions caused by results-page focus order and disclosure structure changes
+- mismatch between card-style visuals and native radio keyboard expectations
+- copy drift between landing text, README, and actual behavior
+- conditional copy contamination across recommendation types
+- repeated revisions to results headings and explanation wording to keep the tool neutral and plain-language
+- edge-case state bugs in the `exploring` pathway when moving backward from results
+
+## 17. Problems That Could Arise
+
+These are likely future risks if the app grows without guardrails:
+
+- scoring rules and hard overrides drifting out of sync
+- English and Spanish content drifting apart
+- accessibility regressions when changing question flow or results markup
+- output ids being added in one place but not all required places
+- more copy contamination inside `DEVICE_CONTENT` because many fragments only appear in rare answer combinations
+- maintainers changing DOM ids without realizing they are tied to ARIA and focus behavior
+- “quick fixes” inside `script.js` making the monolithic structure harder to unwind later
+
+## 18. What Could Be Expanded
+
+These are reasonable expansion areas:
+
+- small automated tests for scoring and branching
+- moving content and scoring config into separate files
+- optional persistence of in-progress answers
+- more structured analytics or usage measurement
+- external content management for recommendation copy
+- richer print or export documentation
+- more languages beyond English and Spanish
+
+Why these are useful:
+
+- they reduce regression risk
+- make policy and content updates safer
+- shorten onboarding for new developers
+- make future hosting transitions easier
+
+## 19. Expansion Risks
+
+Every major expansion has tradeoffs:
+
+- splitting content into more files improves maintainability, but increases coordination and file-count complexity
+- adding persistence improves continuity, but introduces privacy and storage questions
+- adding analytics improves insight, but raises governance and consent questions
+- externalizing content makes updates easier, but can weaken copy QA if content is reviewed outside the normal code workflow
+- adding more languages increases reach, but doubles or triples translation maintenance
+- adding more recommendation logic can make results harder to explain in plain language
+
+## 20. Gaps and Improvement Targets
 
 These are concrete issues worth targeting next.
 
-### 12.1 Content and documentation drift
-
-- The current landing copy and README still say answers automatically open the next question, but the app now requires `Next` after selecting a radio answer.
-- Files:
-  - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:38)
-  - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:44)
-  - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:50)
-  - [README.md](/Users/oo/Desktop/explore-micromobility/README.md:1)
-
-### 12.2 Monolithic script structure
+### 20.1 Monolithic script structure
 
 - `script.js` currently mixes:
   - content
@@ -461,28 +654,21 @@ These are concrete issues worth targeting next.
   - event handling
 - This makes changes riskier and slower to review.
 - A future refactor should split:
-  - content/config
+  - content and config
   - scoring logic
   - rendering
   - accessibility helpers
   - event wiring
 
-### 12.3 Inline styles in runtime HTML
+### 20.2 Inline styles in runtime HTML
 
 - Some question markup still uses inline styles for spacing and the age input.
 - This makes visual maintenance harder and spreads style logic between CSS and JS.
-- File:
+- Files:
   - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:3915)
   - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:3936)
 
-### 12.4 Debug logging remains in production flow
-
-- `submitCurrentAnswers()` still prints question rows, normalized answers, scores, and final rankings to the browser console.
-- This is useful during development, but may not be desirable in production or public demos.
-- File:
-  - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:1499)
-
-### 12.5 Content cleanup issues inside device copy
+### 20.3 Content cleanup issues inside device copy
 
 - There is at least one duplicated object key:
   - `ebike.considerConditional.recreation` appears twice
@@ -494,16 +680,16 @@ These are concrete issues worth targeting next.
   - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:204)
   - [script.js](/Users/oo/Desktop/explore-micromobility/script.js:230)
 
-### 12.6 Known copy contamination risk
+### 20.4 Known copy contamination risk
 
-- Some older bicycle/adaptive wording has looked copy-shifted during past accessibility work. The content block structure makes this easy to miss because many fragments are conditional and only show in certain answer combinations.
+- Some older bicycle and adaptive wording has looked copy-shifted during past accessibility work. The content block structure makes this easy to miss because many fragments are conditional and only show in certain answer combinations.
 - Any future copy QA should test:
   - bicycle
   - adaptive cycles
   - child path
   - explore-all path
 
-### 12.7 No automated test layer
+### 20.5 No automated test layer
 
 - There is currently no automated test suite for:
   - score calculation
@@ -516,7 +702,7 @@ These are concrete issues worth targeting next.
   - `applyOverrides()`
   - `getVisibleQuestionKeys()`
 
-## 13. Recommended Handoff Focus
+## 21. Recommended Handoff Focus
 
 For a hosting or maintenance walkthrough, the most useful live walkthrough order is:
 
@@ -529,7 +715,7 @@ For a hosting or maintenance walkthrough, the most useful live walkthrough order
    - overrides
    - ranking
 5. recommendation content assembly
-6. Spanish/localization overrides
+6. Spanish and localization overrides
 7. accessibility features
 8. known cleanup targets
 
