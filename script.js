@@ -42,12 +42,16 @@ const LANDING_PAGE_COPY = {
   en: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Start exploring",
+    landingImageAlt:
+      "Illustrations of micromobility options including bikes, scooters, skates, a unicycle, and mobility devices",
     introText:
       "Explore Micromobility is a public information tool for browsing micromobility options, such as bikes, e-scooters, and more, based on answering a few questions. The tool shows one question at a time, and there are at most 9 questions, depending on your selections. Select an answer, then use Next to move to the next question. The last question uses Explore results to open your results. Explore Micromobility shows these devices using a simple additive system based on your answers. This scoring system is based on rules proposed by the Special Commission on Micromobility and current Massachusetts general law."
   },
   es: {
     heroTitle: "Explore Micromobility",
     startButtonText: "Comenzar a explorar",
+    landingImageAlt:
+      "Ilustraciones de opciones de micromovilidad, incluidas bicicletas, scooters, patines, un monociclo y dispositivos de movilidad",
     introText:
       "Explore Micromobility es una herramienta pública de información para explorar opciones de micromovilidad, como bicicletas, scooters eléctricos y más, a partir de responder algunas preguntas. La herramienta muestra una pregunta a la vez y tiene como máximo 9 preguntas, según tus selecciones. Selecciona una respuesta y luego usa Siguiente para pasar a la siguiente pregunta. La última pregunta usa Explorar resultados para abrir tus resultados. Explore Micromobility muestra estos dispositivos usando un sistema aditivo simple basado en tus respuestas. Este sistema de puntuación se basa en las reglas propuestas por la Special Commission on Micromobility y la ley general vigente de Massachusetts."
   }
@@ -3719,6 +3723,7 @@ function setLandingHeaderVisibility(isVisible) {
 function renderLandingCopy() {
   const intro = document.getElementById("introText");
   const heroTitle = document.getElementById("heroTitle");
+  const landingImage = document.getElementById("landingImage");
   const startExploringBtn = document.getElementById("startExploringBtn");
   const progress = document.getElementById("progress");
   const copy = getLandingLocaleCopy();
@@ -3734,6 +3739,10 @@ function renderLandingCopy() {
 
   if (intro) {
     intro.textContent = copy.introText;
+  }
+
+  if (landingImage) {
+    landingImage.alt = copy.landingImageAlt;
   }
 
   if (startExploringBtn) {

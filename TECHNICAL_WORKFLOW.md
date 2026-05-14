@@ -37,7 +37,7 @@ The app translates existing and recommended Massachusetts policy and law into a 
 - avoid endorsing a specific product
 - remain easy to maintain without a backend
 - stay accessible to keyboard and screen reader users
-
+x
 ## 2. What This App Is
 
 Explore Micromobility is a static front-end app. There is no backend, database, build step, or API.
