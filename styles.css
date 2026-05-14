@@ -114,20 +114,14 @@ h4,
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 6px 0 8px;
-  padding: 18px;
-  border: 1px solid rgba(20, 85, 143, 0.12);
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.72) 58%, rgba(219, 234, 247, 0.92) 100%);
-  box-shadow: 0 10px 26px rgba(24, 59, 91, 0.08);
+  margin: 10px 0 8px;
 }
 
 .landing-image {
   display: block;
   width: auto;
-  max-width: min(100%, 720px);
-  max-height: 420px;
+  max-width: min(100%, 820px);
+  max-height: 500px;
   object-fit: contain;
   object-position: center;
   margin: 0 auto;
@@ -2125,15 +2119,13 @@ body.results-view-active #result {
   }
 
   .landing-media {
-    margin: 4px 0 6px;
-    padding: 12px;
-    border-radius: 18px;
+    margin: 8px 0 6px;
   }
 
   .landing-image {
     width: 100%;
     max-width: 100%;
-    max-height: 300px;
+    max-height: 360px;
   }
 
   .landing-actions {
